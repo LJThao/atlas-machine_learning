@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Function that performs matrix multiplication"""
 
+
 def mat_mul(mat1, mat2):
     """Performs matrix multiplication"""
     if matrix_shape(mat1)[1] != matrix_shape(mat2)[0]:
@@ -16,6 +17,7 @@ def mat_mul(mat1, mat2):
                 row.append(val)
             mat3.append(row.copy())
         return mat3
+
 
 def matrix_shape(matrix):
     """Returns the list of the matrix"""

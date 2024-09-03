@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Function for adding two matrices"""
 
+
 def add_matrices2D(mat1, mat2):
     """Adding two matrices"""
     if len(mat1) != len(mat2):
@@ -14,6 +15,7 @@ def add_matrices2D(mat1, mat2):
             else:
                 mat3.append(row)
         return mat3
+
 
 def add_arrays(arr1, arr2):
     """Adding two arrays"""

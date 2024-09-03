@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Calculate a Shape of a Matrix"""
 
+
 def matrix_shape(matrix):
     """Returned as a list of integers"""
     # execute this to concatenates the list for the shape
