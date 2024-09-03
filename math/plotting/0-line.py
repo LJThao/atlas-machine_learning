@@ -11,3 +11,4 @@ def line():
     # plotting the data y with a red color line
     plt.plot(y, color="red")
     plt.xlim([0, 10])
+    plt.show()

@@ -18,3 +18,4 @@ def change_scale():
     plt.title("Exponential Decay of C-14")
     plt.yscale('log')
     plt.xlim([0, 28650])
+    plt.show()
