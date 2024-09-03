@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def two():
     """Plotting two lines in a line graph"""
     x = np.arange(0, 21000, 1000)
