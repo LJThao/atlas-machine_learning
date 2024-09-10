@@ -23,7 +23,11 @@ class Poisson():
 
     def pmf(self, k):
         """Calculate the value of PMF for a given number of
-        sucessess using the posson distribution"""
+        sucessess using the posson distribution
+
+        PMF = Probability Mass Function
+        
+        """
         # setting approximation of constant
         e = 2.7182818285
         # check if k is less, then return
@@ -42,6 +46,15 @@ class Poisson():
 
     def cdf(self, k):
         """Calculate the value of the CDF for a given number of
-        successes"""
+        successes
 
-        
+        CDF = Cumulative Distribution Function
+
+        """
+        if k < 0:
+            return 0
+        k = int(k)
+        value = 0
+        for i in range(k + 1):
+            value += self.pmf(i)
+        return value
