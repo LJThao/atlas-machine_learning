@@ -26,7 +26,7 @@ class Poisson():
         sucessess using the posson distribution
 
         PMF = Probability Mass Function
-        
+
         """
         # setting approximation of constant
         e = 2.7182818285
