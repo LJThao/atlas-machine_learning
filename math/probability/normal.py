@@ -43,3 +43,11 @@ class Normal():
         PDF = Probability Density Function
 
         """
+        # setting up approximations for pi and e
+        pi = 3.1415926536
+        e = 2.7182818285
+        std = self.stddev
+        mean = self.mean
+
+        exponent = ((-x - mean) ** 2) / (2 * std ** 2)
+        return ((e ** exponent) / (std * ((2 * pi) ** (1/2))))
