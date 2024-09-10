@@ -23,7 +23,7 @@ class Normal():
     def z_score(self, x):
         """Calculates the z_score of a given x-value:
 
-        z-score formula: z = x - − μ / σ
+        z-score formula: z = x - μ / σ
                          z = x-value - mean / standard deviation
 
         """
@@ -36,3 +36,4 @@ class Normal():
 
         """
         return ((z * self.stddev) + (self.mean))
+
