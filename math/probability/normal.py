@@ -22,3 +22,7 @@ class Normal():
 
     def z_score(self, x):
         """Calculates the z_score of a given x-value"""
+
+
+    def x_value(self, z):
+        """Calculates x-value of a given z-score"""
