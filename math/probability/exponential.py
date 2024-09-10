@@ -36,3 +36,12 @@ class Exponential():
             return 0
         # calculate the value using the formula
         return (lamb * (e ** (-lamb * x)))
+
+    def cdf(self, x):
+        """Calculates the value of the CDF for a given time
+
+        CDF = Cumulative Distribuion Function
+
+        """
+        if x < 0:
+            return 0
