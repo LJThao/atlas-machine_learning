@@ -54,3 +54,11 @@ class Normal():
         exponent = -((x - mean) ** 2) / (2 * std ** 2)
         coef = 1 / (std * (2 * pi) ** (1/2))
         return (coef) * (e ** exponent)
+
+    def cdf(self, x):
+        """Calculates the value of the CDF for a given x-value
+
+        CDF = Cumulative Distribution Function
+        
+        """
+        
