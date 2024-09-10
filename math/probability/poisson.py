@@ -39,3 +39,8 @@ class Poisson():
                 fact *= i
         # calculate the # of successes using the poisson formula
         return (e ** (-self.lambtha)) * (self.lambtha ** k) / (fact)
+
+    def cdf(self, k):
+        """Calculate the value of the CDF for a given number of
+        successes"""
+        
