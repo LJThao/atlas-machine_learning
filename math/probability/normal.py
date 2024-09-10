@@ -37,3 +37,9 @@ class Normal():
         """
         return ((z * self.stddev) + (self.mean))
 
+    def pdf(self, x):
+        """Calculates the value of the PDF for a given x-value
+
+        PDF = Probability Density Function
+
+        """
