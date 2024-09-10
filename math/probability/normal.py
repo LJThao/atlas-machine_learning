@@ -49,5 +49,7 @@ class Normal():
         std = self.stddev
         mean = self.mean
 
-        exponent = ((-x - mean) ** 2) / (2 * std ** 2)
-        return ((e ** exponent) / (std * ((2 * pi) ** (1/2))))
+        # calculating the value of PDF
+        exponent = -((x - mean) ** 2) / (2 * std ** 2)
+        coef = 1 / (std * (2 * pi) ** (1/2))
+        return (coef) * (e ** exponent)
