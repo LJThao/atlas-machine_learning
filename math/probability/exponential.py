@@ -24,15 +24,15 @@ class Exponential():
 
     def pdf(self, x):
         """Calculates the value of the PDF for a given time
-        
+
         PDF = Probability Density Function
 
         """
-        # setting e and assigning l
+        # setting e and assigning lamb
         e = 2.7182818285
-        l = self.lambtha
+        lamb = self.lambtha
         # check if x is less than 0, if so return
         if x < 0:
             return 0
-        # calulate the value using the formula
-        return (l * (e ** (-l * x)))
+        # calculate the value using the formula
+        return (lamb * (e ** (-lamb * x)))
