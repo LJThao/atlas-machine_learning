@@ -31,3 +31,7 @@ class Binomial():
     def pmf(self, k):
         """Calculates the value of the PMF for a given number of
         sucesses"""
+
+    def cdf(self, k):
+        """Calculates the value of the CDF for a given number of
+        sucessess"""
