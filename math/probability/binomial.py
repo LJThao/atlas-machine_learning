@@ -27,3 +27,7 @@ class Binomial():
         # making sure n is an int and p is a float
         self.n = int(n)
         self.p = float(p)
+
+    def pmf(self, k):
+        """Calculates the value of the PMF for a given number of
+        sucesses"""
