@@ -59,7 +59,7 @@ class Normal():
         """Calculates the value of the CDF for a given x-value
 
         CDF = Cumulative Distribution Function
-        
+
         """
         pi = 3.1415926536
         mean = self.mean
@@ -68,7 +68,7 @@ class Normal():
         # calculating scaled x for erf function
         x_scaled = (x - mean) / (std * 2 ** 0.5)
 
-        # calculating erf function 
+        # calculating erf function
         erf = (2 / (pi ** 0.5)) * (x_scaled - (x_scaled**3) / 3 +
                                    (x_scaled**5) / 10 -
                                    (x_scaled**7) / 42 +
