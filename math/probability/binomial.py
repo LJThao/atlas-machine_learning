@@ -19,7 +19,7 @@ class Binomial():
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
 
-            # Calculating n and p from data
+            # calculating n and p from data
             p = sum(data) / len(data)
             n = round(sum(data) / p)
             p = sum(data) / (n * len(data))
@@ -31,6 +31,21 @@ class Binomial():
     def pmf(self, k):
         """Calculates the value of the PMF for a given number of
         sucesses"""
+        # setting k as in int
+        k = int(k)
+        if k < 0 or k > self.n:
+            return 0
+        n = self.n
+        p = self.p
+
+        # calculating the binomial coefficient
+        bi_coef = 1
+        for i in range(k):
+            bi_coef *= (n - i)
+            bi_coef //= (i + 1)
+
+        # calulating the pmf        
+        return (bi_coef * (p ** k) * (1 - p) ** (n - k))
 
     def cdf(self, k):
         """Calculates the value of the CDF for a given number of
