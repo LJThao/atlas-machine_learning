@@ -44,7 +44,7 @@ class Binomial():
             bi_coef *= (n - i)
             bi_coef //= (i + 1)
 
-        # calulating the pmf        
+        # calulating the pmf
         return (bi_coef * (p ** k) * (1 - p) ** (n - k))
 
     def cdf(self, k):
