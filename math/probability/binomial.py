@@ -50,3 +50,12 @@ class Binomial():
     def cdf(self, k):
         """Calculates the value of the CDF for a given number of
         sucessess"""
+        # setting k as in int and self.n as a n variable
+        k = int(k)
+        n = self.n
+        # checks if k is outside of 0 to n, return
+        if k < 0 or k > n:
+            return 0
+
+        # calculate the cdf
+        return (sum([self.pmf(i) for i in range(k + 1)]))
