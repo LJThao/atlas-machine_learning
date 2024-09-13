@@ -49,5 +49,5 @@ class Exponential():
         # check if x is less than 0, if so return
         if x < 0:
             return 0
-        # calculate the value of cdf using the formula
+        # calculate the value using the formula
         return (1 - (e ** (-lamb * x)))
