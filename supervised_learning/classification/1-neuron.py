@@ -21,18 +21,18 @@ class Neuron():
         self.b = 0
         self.A = 0
 
-        # setting up the private instance attributes for __W, __b, __A
-        @property
-        def W(self):
-            """getter method to get W"""
-            return self.__W
+    # setting up the private instance attributes for __W, __b, __A
+    @property
+    def W(self):
+        """getter method to get W"""
+        return self.__W
 
-        @property
-        def b(self):
-            """getter method to get b"""
-            return self.__b
+    @property
+    def b(self):
+        """getter method to get b"""
+        return self.__b
 
-        @property
-        def A(self):
-            """getter method to get A"""
-            return self.__A
+    @property
+    def A(self):
+        """getter method to get A"""
+        return self.__A
