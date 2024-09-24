@@ -25,9 +25,13 @@ class Neuron():
         def W(self):
             """getter method to get W"""
             return self.__W
-        
+
         @property
         def b(self):
             """getter method to get b"""
             return self.__b
 
+        @property
+        def A(self):
+            """getter method to get A"""
+            return self.__A
