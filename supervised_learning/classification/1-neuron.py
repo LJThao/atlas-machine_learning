@@ -16,12 +16,11 @@ class Neuron():
         if nx < 1:
             raise ValueError("nx must be a positive integer")
 
-        # setting up public instance attributes W, b, A
-        self.W = np.random.randn(1, nx)
-        self.b = 0
-        self.A = 0
+        # setting up the private instance attributes for __W, __b, __A
+        self.__W = np.random.randn(1, nx)
+        self.__b = 0
+        self.__A = 0
 
-    # setting up the private instance attributes for __W, __b, __A
     @property
     def W(self):
         """getter method to get W"""
