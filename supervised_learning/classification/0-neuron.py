@@ -17,3 +17,4 @@ class Neuron():
         
         # setting up public instance attributes W, b, A
         self.W = np.random.randn(1, nx)
+        self.b = 0
