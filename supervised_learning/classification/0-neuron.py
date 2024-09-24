@@ -8,8 +8,8 @@ class Neuron():
     """Class Neuron"""
     def __init__(self, nx):
         """Class Constructor"""
-        # checks to make sure nx is an int, if not raise
-        if type(nx) != int:
+        # checks if nx is an int, if not raise
+        if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
         # checks is nx is less than 1, if it is raise
         if nx < 1:
