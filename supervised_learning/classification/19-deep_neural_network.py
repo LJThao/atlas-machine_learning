@@ -48,7 +48,7 @@ class DeepNeuralNetwork():
     def weights(self):
         """use getter method for weights"""
         return self.__weights
-    
+
     def forward_prop(self, X):
         """calculates the forward propagation of the neural
         network"""
