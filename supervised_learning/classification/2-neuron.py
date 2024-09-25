@@ -36,6 +36,21 @@ class Neuron():
         """getter method to get A"""
         return self.__A
 
-    def forward_prop(self, x):
+    def forward_prop(self, X):
         """public method to calculate the forward propagation
-        of the neuron"""
+        of the neuron.
+        
+        Formula for z = W * X + b
+
+        """
+        W = self.W
+        b = self.b
+
+        # calculating z
+        z = np.sum(W * X, axis=1, keepdims=True) + b
+
+        # applies sigmoid activation function
+        self.__A = 1 / (1 + np.exp(-z))
+
+        # returns the activated output of the neuron
+        return self.__A
