@@ -46,8 +46,8 @@ class Neuron():
         W = self.W
         b = self.b
 
-        # calculating z
-        z = np.sum(W * X, axis=1, keepdims=True) + b
+        # calculating z by performing matrix multiplication
+        z = np.dot(W, X) + b
 
         # applies sigmoid activation function
         self.__A = 1 / (1 + np.exp(-z))
