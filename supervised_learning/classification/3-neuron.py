@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Class Neuron that defines a single
 neuron performing binary classification based on
-1-neuron.py"""
+2-neuron.py"""
 import numpy as np
 
 
