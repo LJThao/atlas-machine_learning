@@ -35,3 +35,7 @@ class Neuron():
     def A(self):
         """getter method to get A"""
         return self.__A
+
+    def forward_prop(self, x):
+        """public method to calculate the forward propagation
+        of the neuron"""
