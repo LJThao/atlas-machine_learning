@@ -98,7 +98,7 @@ class Neuron():
         self.__W -= alpha * np.dot(dZ, X.T) / m
         self.__b -= alpha * np.sum(dZ) / m
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
         """trains the neuron and returns the evaluation of the training
         data"""
         if not isinstance(iterations, int):
