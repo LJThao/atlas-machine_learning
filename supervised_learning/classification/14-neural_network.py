@@ -99,4 +99,4 @@ class NeuralNetwork():
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """trains the neural network and returning the evaluation of the training
-        data after iterations of training have occured"""
+        data after iterations of training have occurred"""
