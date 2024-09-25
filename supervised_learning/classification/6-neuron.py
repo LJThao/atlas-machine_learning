@@ -97,3 +97,16 @@ class Neuron():
         dZ = A - Y
         self.__W -= alpha * np.dot(dZ, X.T) / m
         self.__b -= alpha * np.sum(dZ) / m
+
+    def train(self, X, Y, iterations=5000, alpha=0.05):
+        """trains the neuron and returns the evaluation of the training
+        data"""
+        if not isinstance(iterations, int):
+            raise TypeError("iterations must be an integer")
+        if iterations <= 0:
+            raise ValueError("iterations must be a positive integer")
+        if not isinstance(alpha, float) or alpha <= 0:
+            raise TypeError("alpha must be a float")
+        if alpha <= 0:
+            raise ValueError("alpha must be positive")
+    
