@@ -23,7 +23,7 @@ class DeepNeuralNetwork():
         # initializing all weights and biases of the network
         prev_nodes = nx
         for i, nodes in enumerate(layers, 1):
-            # setting variable key for the current layer index
+            # setting variable key to the current layer index
             key = f'{i}'
             # using the He et al. method to initialize weights
             self.weights[f'W{key}'] = np.random.randn(nodes, prev_nodes) * np.sqrt(2 / prev_nodes)
