@@ -75,9 +75,11 @@ class Neuron():
         
         X = input data
         Y = correct labels for the input data
-
+    
         then returns the prediction and cost
-        
-        """
-        
 
+        """
+        A = self.forward_prop(X)
+        prediction = (A >= 0.5).astype(int)
+        cost = self.cost(Y, A)
+        return prediction, cost
