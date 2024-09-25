@@ -28,7 +28,8 @@ class DeepNeuralNetwork():
             key = f'{i}'
             # using the He et al. method to initialize weights
             self.weights[f'W{key}'] = np.random.randn(nodes, prev_nodes
-                                                      ) * np.sqrt(2 / prev_nodes)
+                                                      ) * np.sqrt(
+                                                          2 / prev_nodes)
             # initialized to 0s and saved the weights dictionary
             self.weights[f'b{key}'] = np.zeros((nodes, 1))
             prev_nodes = nodes
