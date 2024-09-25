@@ -74,9 +74,10 @@ class NeuralNetwork():
 
         # calculate the average cost
         return -np.sum(loss) / A.shape[1]
-    
+
     def evaluate(self, X, Y):
-        """evaluates the neural networks's predictions and returns its predictions"""
+        """evaluates the neural networks's predictions and returns its
+        predictions"""
         A = self.forward_prop(X)[1]
         prediction = (A >= 0.5).astype(int)
         cost = self.cost(Y, A)
