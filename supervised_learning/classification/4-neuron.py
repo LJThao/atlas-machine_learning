@@ -69,3 +69,15 @@ class Neuron():
 
         # calculate avg cost
         return -np.sum(loss) / A.shape[1]
+
+    def evaluate(self, X, Y):
+        """evaluates the neuron's predictions
+        
+        X = input data
+        Y = correct labels for the input data
+
+        then returns the prediction and cost
+        
+        """
+        
+
