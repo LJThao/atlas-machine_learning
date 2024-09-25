@@ -39,7 +39,7 @@ class Neuron():
     def forward_prop(self, X):
         """public method to calculate the forward propagation
         of the neuron.
-        
+
         Formula for z = W * X + b
 
         """
