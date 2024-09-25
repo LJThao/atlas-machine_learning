@@ -65,3 +65,12 @@ class NeuralNetwork():
         self.__A1 = 1 / (1 + np.exp(-(np.dot(self.W1, X) + self.b1)))
         self.__A2 = 1 / (1 + np.exp(-(np.dot(self.W2, self.A1) + self.b2)))
         return self.A1, self.A2
+
+    def cost(self, Y, A):
+        """calculates the cost of the model using logistic regression"""
+        log_A = np.log(A)
+        log_1_minus_A = np.log(1.0000001 - A)
+        loss = Y * log_A + (1 - Y) * log_1_minus_A
+
+        # calculate the average cost
+        return -np.sum(loss) / A.shape[1]

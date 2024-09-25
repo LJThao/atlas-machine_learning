@@ -4,7 +4,7 @@ import numpy as np
 
 Deep = __import__('19-deep_neural_network').DeepNeuralNetwork
 
-lib_train = np.load('../data/Binary_Train.npz')
+lib_train = np.load('/root/atlas-machine_learning/supervised_learning/classification/data/Binary_Train.npz')
 X_3D, Y = lib_train['X'], lib_train['Y']
 X = X_3D.reshape((X_3D.shape[0], -1)).T
 
