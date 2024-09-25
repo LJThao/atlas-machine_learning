@@ -105,7 +105,7 @@ class Neuron():
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
-        if not isinstance(alpha, float) or alpha <= 0:
+        if not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
