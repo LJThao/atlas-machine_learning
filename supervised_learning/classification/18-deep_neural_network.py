@@ -52,11 +52,13 @@ class DeepNeuralNetwork():
     def forward_prop(self, X):
         """calculates the forward propagation of the neural
         network"""
+        # using the sigmoid function
+        def sig(Z):
+            """sigmoid function"""
+            return 1 / (1 + np.exp(-Z))
+
         # X saved to the cache dictionary using key A0
         self.__cache['A0'] = X
-
-        # using the sigmoid function
-        sig = lambda Z: 1 / (1 + np.exp(-Z))
 
         # iterating each layer by applying W, b, Z
         A = X
