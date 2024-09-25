@@ -54,3 +54,8 @@ class Neuron():
 
         # returns the activated output of the neuron
         return self.__A
+    
+    def cost(self, Y, A):
+        """calculates the cost of the model using a logistic
+        regression"""
+        
