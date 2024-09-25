@@ -27,7 +27,8 @@ class DeepNeuralNetwork():
             # setting variable key to the current layer index
             key = f'{i}'
             # using the He et al. method to initialize weights
-            self.weights[f'W{key}'] = np.random.randn(nodes, prev_nodes) * np.sqrt(2 / prev_nodes)
+            self.weights[f'W{key}'] = np.random.randn(nodes, prev_nodes
+                                                      ) * np.sqrt(2 / prev_nodes)
             # initialized to 0s and saved the weights dictionary
             self.weights[f'b{key}'] = np.zeros((nodes, 1))
             prev_nodes = nodes
@@ -36,12 +37,12 @@ class DeepNeuralNetwork():
     def L(self):
         """use getter method for L"""
         return self.__L
-    
+
     @property
     def cache(self):
         """use getter method for cache"""
         return self.__cache
-    
+
     @property
     def weights(self):
         """use getter method for weights"""
