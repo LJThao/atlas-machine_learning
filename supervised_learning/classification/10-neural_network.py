@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""Class NeuralNetwork that defines a neural network with a hidden
+layer performing binary classification based on 9-neural_network.py"""
+import numpy as np
+
+
+class NeuralNetwork():
+    """Class NeuralNetwork"""
+    def __init__(self, nx, nodes):
+        """Class constructor"""
+        if not isinstance(nx, int):
+            raise TypeError("nx must be an integer")
+        if nx < 1:
+            raise ValueError("nx must be a positive integer")
+        if not isinstance(nodes, int):
+            raise TypeError("nodes must be an integer")
+        if nodes < 1:
+            raise ValueError("nodes must be a positive integer")
+
+        # setting private instance attributes
+        self.__W1 = np.random.normal(size=(nodes, nx))
+        self.__b1 = np.zeros(shape=(nodes, 1))
+        self.__A1 = 0
+        self.__W2 = np.random.normal(size=(1, nodes))
+        self.__b2 = 0
+        self.__A2 = 0
+
+    @property
+    def W1(self):
+        """use getter method for W1"""
+        return self.__W1
+
+    @property
+    def b1(self):
+        """use getter method for b1"""
+        return self.__b1
+
+    @property
+    def A1(self):
+        """use getter method for a1"""
+        return self.__A1
+
+    @property
+    def W2(self):
+        """use getter method for w2"""
+        return self.__W2
+
+    @property
+    def b2(self):
+        """use getter method for b2"""
+        return self.__b2
+
+    @property
+    def A2(self):
+        """use getter method for a2"""
+        return self.__A2
