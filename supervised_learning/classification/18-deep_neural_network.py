@@ -54,10 +54,10 @@ class DeepNeuralNetwork():
         network"""
         # X saved to the cache dictionary using key A0
         self.__cache['A0'] = X
-    
+
         # using the sigmoid function
         sig = lambda Z: 1 / (1 + np.exp(-Z))
-    
+
         # iterating each layer by applying W, b, Z
         A = X
         for i in range(1, self.__L + 1):
