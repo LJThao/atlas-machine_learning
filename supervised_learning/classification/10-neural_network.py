@@ -57,12 +57,11 @@ class NeuralNetwork():
 
     def forward_prop(self, X):
         """calculating the forward propagation of the neural network:
-        
+
         X = input data, nx = number of input features of a neuron,
         m = number of examples
-        
+
         """
         self.__A1 = 1 / (1 + np.exp(-(np.dot(self.W1, X) + self.b1)))
         self.__A2 = 1 / (1 + np.exp(-(np.dot(self.W2, self.A1) + self.b2)))
         return self.A1, self.A2
-
