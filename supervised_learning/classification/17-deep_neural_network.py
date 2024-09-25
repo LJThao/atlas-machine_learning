@@ -16,10 +16,10 @@ class DeepNeuralNetwork():
         if not isinstance(layers, list) or len(layers) == 0:
             raise TypeError("layers must be a list of positive integers")
 
-        # setting up the public instance attributes
-        self.L = len(layers)
-        self.cache = {}
-        self.weights = {}
+        # setting up the private instance attributes
+        self.__L = len(layers)
+        self.__cache = {}
+        self.__weights = {}
 
         # initializing all weights and biases of the network
         prev_nodes = nx
@@ -31,3 +31,18 @@ class DeepNeuralNetwork():
             # initialized to 0s and saved the weights dictionary
             self.weights[f'b{key}'] = np.zeros((nodes, 1))
             prev_nodes = nodes
+
+    @property
+    def L(self):
+        """use getter method for L"""
+        return self.__L
+    
+    @property
+    def cache(self):
+        """use getter method for cache"""
+        return self.__cache
+    
+    @property
+    def weights(self):
+        """use getter method for erights"""
+        return self.__weights
