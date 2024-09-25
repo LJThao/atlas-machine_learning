@@ -61,7 +61,7 @@ class Neuron():
 
         Y = correct labels for input data
         A = the activated output of a neuron for each example
-    
+
         """
         log_A = np.log(A)
         log_1_minus_A = np.log(1.0000001 - A)
