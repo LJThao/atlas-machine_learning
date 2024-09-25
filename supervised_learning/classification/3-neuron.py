@@ -54,8 +54,18 @@ class Neuron():
 
         # returns the activated output of the neuron
         return self.__A
-    
+
     def cost(self, Y, A):
         """calculates the cost of the model using a logistic
-        regression"""
-        
+        regression
+
+        Y = correct labels for input data
+        A = the activated output of a neuron for each example
+    
+        """
+        log_A = np.log(A)
+        log_1_minus_A = np.log(1.0000001 - A)
+        loss = Y * log_A + (1 - Y) * log_1_minus_A
+
+        # calculate avg cost
+        return -np.sum(loss) / A.shape[1]
