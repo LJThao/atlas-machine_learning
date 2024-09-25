@@ -1,4 +1,4 @@
-#1/usr/bin/env python3
+#!/usr/bin/env python3
 """Class DeepNeuralNetwork that defines a deep neural
 network performing binary classification"""
 import numpy as np
@@ -33,4 +33,3 @@ class DeepNeuralNetwork():
             # initialized to 0s and saved the weights dictionary
             self.weights[f'b{key}'] = np.zeros((nodes, 1))
             prev_nodes = nodes
-    
