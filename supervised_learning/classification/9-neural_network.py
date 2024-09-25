@@ -16,7 +16,7 @@ class NeuralNetwork():
             raise TypeError("nodes must be an integer")
         if nodes < 1:
             raise ValueError("nodes must be a positive integer")
-        
+
         # setting private instance attributes
         self.__W1 = np.random.normal(size=(nodes, nx))
         self.__b1 = np.zeros(shape=(nodes, 1))
@@ -54,4 +54,3 @@ class NeuralNetwork():
     def A2(self):
         """use getter method for a2"""
         return self.__A2
-    
