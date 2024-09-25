@@ -44,5 +44,5 @@ class DeepNeuralNetwork():
     
     @property
     def weights(self):
-        """use getter method for erights"""
+        """use getter method for weights"""
         return self.__weights
