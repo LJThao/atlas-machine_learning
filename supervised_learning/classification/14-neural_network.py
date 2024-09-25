@@ -74,9 +74,10 @@ class NeuralNetwork():
 
         # calculate the average cost
         return -np.sum(loss) / A.shape[1]
-    
+
     def evaluate(self, X, Y):
-        """evaluates the neural networks's predictions and returns its predictions"""
+        """evaluates the neural networks's predictions and returns its
+        predictions"""
         A = self.forward_prop(X)[1]
         prediction = (A >= 0.5).astype(int)
         cost = self.cost(Y, A)
@@ -91,15 +92,15 @@ class NeuralNetwork():
         dz1 = np.dot(self.__W2.T, dz2) * (A1 * (1 - A1))
         dw1 = np.dot(dz1, X.T) / m
         db1 = np.sum(dz1, axis=1, keepdims=True) / m
-        
+
         self.__W2 -= alpha * dw2
         self.__b2 -= alpha * db2
         self.__W1 -= alpha * dw1
         self.__b1 -= alpha * db1
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
-        """trains the neural network and returning the evaluation of the training
-        data after iterations of training have occurred"""
+        """trains the neural network and returning the evaluation of
+        the training data after iterations of training have occurred"""
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
