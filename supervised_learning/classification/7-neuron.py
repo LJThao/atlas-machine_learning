@@ -3,6 +3,7 @@
 neuron performing binary classification based on
 5-neuron.py"""
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Neuron():
@@ -115,8 +116,34 @@ class Neuron():
             if step < 1 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
 
+        # storing costs and iterations to a list for the graph
+        if graph:
+            g_costs = []
+            g_iters = []
 
-        for i in range(iterations):
+        # using forward propagation and gradient descent
+        for iteration in range(iterations):
             A = self.forward_prop(X)
             self.gradient_descent(X, Y, A, alpha)
+
+            # calculates the current cost and print at the set interval
+            if verbose and iteration % step == 0:
+                cost = self.cost(Y, A)
+                print(f"Cost after {iteration} iterations: {cost}")
+
+            # appending cost and iteration to the list
+            if graph and iteration % step == 0:
+                cost = self.cost(Y, A)
+                g_costs.append(cost)
+                g_iters.append(iteration)
+
+        # plotting the graph and then displaying
+        if graph:
+            plt.plot(g_costs, g_iters, label='Cost', color='blue')
+            plt.title('Training Cost')
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.show()
+
+        # returning the evaluation of the training data
         return self.evaluate(X, Y)
