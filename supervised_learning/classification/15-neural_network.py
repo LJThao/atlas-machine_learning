@@ -2,6 +2,7 @@
 """Class NeuralNetwork that defines a neural network with a hidden
 layer performing binary classification based on 14-neural_network.py"""
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class NeuralNetwork():
@@ -98,7 +99,7 @@ class NeuralNetwork():
         self.__W1 -= alpha * dw1
         self.__b1 -= alpha * db1
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
         """trains the neural network and returning the evaluation of
         the training data after iterations of training have occurred"""
         if not isinstance(iterations, int):
@@ -109,7 +110,41 @@ class NeuralNetwork():
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-        for i in range(iterations):
-            self.forward_prop(X)
-            self.gradient_descent(X, Y, self.A1, self.A2, alpha)
+        if graph or verbose:
+            if not isinstance(step, int):
+                raise TypeError("step must be an integer")
+            if step < 1 or step > iterations:
+                raise ValueError("step must be positive and <= iterations")
+
+        # storing costs and iterations to a list for the graph
+        if graph:
+            g_costs = []
+            g_iters = []
+
+        # using forward propagation and gradient descent
+        for iteration in range(iterations + 1):
+            A1, A2 = self.forward_prop(X)
+            self.gradient_descent(X, Y, A1, A2, alpha)
+
+            # calculates the cost in each step
+            cost = self.cost(Y, A2)
+
+            # calculates the current cost and print at the set interval
+            if verbose and iteration % step == 0:
+                print(f"Cost after {iteration} iterations: {cost}")
+
+            # appending cost and iteration to the list
+            if graph and iteration % step == 0:
+                g_costs.append(cost)
+                g_iters.append(iteration)
+
+        # plotting the graph and then displaying
+        if graph:
+            plt.plot(g_iters, g_costs, label='Cost', color='blue')
+            plt.title('Training Cost')
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.show()
+
+        # returning the evaluation of the training data
         return self.evaluate(X, Y)
