@@ -12,20 +12,14 @@ def one_hot_encode(Y, classes):
     classes = max number of classes in Y
 
     """
-    # checks Y for a 1-dim array, if not return
-    if not isinstance(Y, np.ndarray):
+    # checks Y for a 1-dim array
+    if not isinstance(Y, np.ndarray) or Y.ndim != 1:
         return None
-    # checks Y if it doesn't have 1 dim, if true return
-    if Y.ndim != 1:
-        return None
-    # checks if classes is an int, if not return
-    if not isinstance(classes, int):
-        return None
-    # checks if classes is less than or equal to 0, if true return
-    if classes <= 0:
+    # checks if classes is an int and positive
+    if not isinstance(classes, int) or classes <= 0:
         return None
 
-    # use the numpy broadcasting rule to return a one-hot encoding of Y
-    oh_matrix = (np.arange(classes)[:, None] == Y).astype(int)
+    # use the numpy broadcasting rule to return a one-hot matrix
+    oh_matrix = (np.arange(classes)[:, None] == Y).astype(float)
 
     return oh_matrix
