@@ -16,7 +16,7 @@ def one_hot_encode(Y, classes):
     if not isinstance(Y, np.ndarray) or Y.ndim != 1:
         return None
     # checks if classes is an int and positive
-    if not isinstance(classes, int) or classes <= 0:
+    if not isinstance(classes, int) or classes < 2:
         return None
 
     # use the numpy broadcasting rule to return a one-hot matrix
