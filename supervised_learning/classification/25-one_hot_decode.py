@@ -6,7 +6,7 @@ import numpy as np
 def one_hot_decode(one_hot):
     """function that converts a one-hot matrix into
     a vector of labels
-    
+
     one_hot = one-hot encoded numpy.ndarray with shape (classes, m)
     classes = max number of classes
     m = number of examples
