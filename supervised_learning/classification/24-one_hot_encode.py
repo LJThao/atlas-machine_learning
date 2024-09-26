@@ -6,7 +6,7 @@ import numpy as np
 def one_hot_encode(Y, classes):
     """function that converts a numeric label vector
     into a one-hot matrix:
-    
+
     Y = numpy.ndarray with shape (m,) containing numeric
     class labels
     classes = max number of classes in Y
