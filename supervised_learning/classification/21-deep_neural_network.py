@@ -99,15 +99,15 @@ class DeepNeuralNetwork():
         alpha = learning rate
 
         """
-        # fetching the training examples for m and the number of layers L
+        # fetching the training examples m and the number of layers L
         m = Y.shape[1]
         L = self.__L
-        # initiate the gradient layer for activation A using cost function
+        # initiate the gradient layer, activate A using cost function
         dA = cache[f'A{L}'] - Y
 
         # loop in reverse order by performing the backpropagation
         for i in reversed(range(1, L + 1)):
-            # retrieving the activations for the previous layer and current
+            # retrieving the activations of the previous and current layer
             prev_A = cache[f'A{i-1}']
             A = cache[f'A{i}']
 
@@ -122,7 +122,7 @@ class DeepNeuralNetwork():
             dw = np.matmul(dz, prev_A.T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
 
-            # updating weights and biases for the current layer
+            # updating weights and biases of the current layer
             self.__weights[f'W{i}'] -= alpha * dw
             self.__weights[f'b{i}'] -= alpha * db
 

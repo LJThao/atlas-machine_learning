@@ -92,7 +92,43 @@ class DeepNeuralNetwork():
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """calculates one pass of gradient descent on the neural
-        network"""
+        network
+
+        Y = correct labels
+        cache = dictionary containing all the intermediary values
+        alpha = learning rate
+
+        """
+        # fetching the training examples for m and the number of layers L
+        m = Y.shape[1]
+        L = self.__L
+        # initiate the gradient layer for activation A using cost function
+        dA = cache[f'A{L}'] - Y
+
+        # loop in reverse order by performing the backpropagation
+        for i in reversed(range(1, L + 1)):
+            # retrieving the activations for the previous layer and current
+            prev_A = cache[f'A{i-1}']
+            A = cache[f'A{i}']
+
+            # checks if the layer is the outer layer L, if so dz is dA
+            if i == L:
+                dz = dA
+            # if it isn't the outer layer, the hidden layer, then compute dz
+            else:
+                dz = dA * A * (1 - A)
+
+            # calculates the gradient weights and biases then get avg
+            dw = np.matmul(dz, prev_A.T) / m
+            db = np.sum(dz, axis=1, keepdims=True) / m
+
+            # updating weights and biases for the current layer
+            self.__weights[f'W{i}'] -= alpha * dw
+            self.__weights[f'b{i}'] -= alpha * db
+
+            # if current layer is greater than 1, then calculate dA (backprop)
+            if i > 1:
+                dA = np.matmul(self.__weights[f'W{i}'].T, dz)
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """trains the deep neural network and returns the
