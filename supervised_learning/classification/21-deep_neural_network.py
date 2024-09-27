@@ -51,7 +51,7 @@ class DeepNeuralNetwork():
     def weights(self):
         """use getter method for weights"""
         return self.__weights
-    
+
     def forward_prop(self, X):
         """calculates the forward propagation of the neural
         network"""
@@ -113,7 +113,7 @@ class DeepNeuralNetwork():
                 dA = cache[f'A{L}'] - Y
                 dz = dA
             else:
-                # if it isn't the outer layer, the hidden layer, then compute dz
+                # if it isn't the outer layer, the hidden layer, compute dz
                 A = cache[f'A{i}']
                 dz = dA * A * (1 - A)
 
