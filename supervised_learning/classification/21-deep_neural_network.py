@@ -105,27 +105,25 @@ class DeepNeuralNetwork():
         # fetching the training examples m and the number of layers L
         m = Y.shape[1]
         L = self.__L
-        # initiate the gradient layer, activate A using cost function
-        dA = cache[f'A{L}'] - Y
 
-        # loop in reverse order by performing the backpropagation
-        for i in reversed(range(1, L + 1)):
-            # retrieving the activations of the previous and current layer
-            prev_A = cache[f'A{i-1}']
-            A = cache[f'A{i}']
-
+        # loop back performing the backpropagation
+        for i in range(L, 0, -1):
             # checks if the layer is the outer layer L, if so dz is dA
             if i == L:
+                dA = cache[f'A{L}'] - Y
                 dz = dA
-            # if it isn't the outer layer, the hidden layer, then compute dz
             else:
+                # if it isn't the outer layer, the hidden layer, then compute dz
+                A = cache[f'A{i}']
                 dz = dA * A * (1 - A)
 
             # calculates the gradient weights and biases then get avg
-            dw = np.matmul(dz, prev_A.T) / m
+            dw = np.matmul(dz, cache[f'A{i-1}'].T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
+
+            # calculate and backpropagate the error for upcoming layer
+            dA = np.matmul(self.__weights[f'W{i}'].T, dz)
 
             # updating weights and biases of the current layer
             self.__weights[f'W{i}'] -= alpha * dw
             self.__weights[f'b{i}'] -= alpha * db
-            dA = np.matmul(self.__weights[f'W{i}'].T, dz)
