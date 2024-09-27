@@ -148,5 +148,5 @@ class DeepNeuralNetwork():
             self.forward_prop(X)
             # gradient_descent to get weights and adjust
             self.gradient_descent(Y, cache, alpha)
-        # return the evaluation of the predicted/cost training data    
+        # return the evaluation of the predicted/cost training data 
         return self.evaluate(X, Y)
