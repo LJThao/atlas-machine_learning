@@ -99,36 +99,31 @@ class DeepNeuralNetwork():
         alpha = learning rate
 
         """
-        # fetching the training examples for m and the number of layers L
+        # fetching the training examples m and the number of layers L
         m = Y.shape[1]
         L = self.__L
-        # initiate the gradient layer for activation A using cost function
-        dA = cache[f'A{L}'] - Y
 
-        # loop in reverse order by performing the backpropagation
-        for i in reversed(range(1, L + 1)):
-            # retrieving the activations for the previous layer and current
-            prev_A = cache[f'A{i-1}']
-            A = cache[f'A{i}']
-
+        # loop back performing the backpropagation
+        for i in range(L, 0, -1):
             # checks if the layer is the outer layer L, if so dz is dA
             if i == L:
+                dA = cache[f'A{L}'] - Y
                 dz = dA
-            # if it isn't the outer layer, the hidden layer, then compute dz
             else:
+                # if it isn't the outer layer, the hidden layer, compute dz
+                A = cache[f'A{i}']
                 dz = dA * A * (1 - A)
 
             # calculates the gradient weights and biases then get avg
-            dw = np.matmul(dz, prev_A.T) / m
+            dw = np.matmul(dz, cache[f'A{i-1}'].T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
 
-            # updating weights and biases for the current layer
+            # calculate and backpropagate the error in upcoming layer
+            dA = np.matmul(self.__weights[f'W{i}'].T, dz)
+
+            # updating weights and biases of the current layer
             self.__weights[f'W{i}'] -= alpha * dw
             self.__weights[f'b{i}'] -= alpha * db
-
-            # if current layer is greater than 1, then calculate dA (backprop)
-            if i > 1:
-                dA = np.matmul(self.__weights[f'W{i}'].T, dz)
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """trains the deep neural network and returns the
