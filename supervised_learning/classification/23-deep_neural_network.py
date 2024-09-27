@@ -128,7 +128,7 @@ class DeepNeuralNetwork():
             self.__weights[f'W{i}'] -= alpha * dw
             self.__weights[f'b{i}'] -= alpha * db
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
         """trains the deep neural network and returns the
         evaluation of the training data after iterations of
         training have occurred"""
