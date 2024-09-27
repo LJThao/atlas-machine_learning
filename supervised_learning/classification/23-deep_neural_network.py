@@ -24,6 +24,9 @@ class DeepNeuralNetwork():
         # initializing all weights and biases of the network
         prev_nodes = nx
         for i, nodes in enumerate(layers, 1):
+            if not isinstance(nodes, int) or nodes <= 0:
+                raise TypeError("layers must be a list of positive integers")
+
             # setting variable key to the current layer index
             key = f'{i}'
             # using the He et al. method to initialize weights
@@ -92,9 +95,58 @@ class DeepNeuralNetwork():
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """calculates one pass of gradient descent on the neural
-        network"""
+        network
+
+        Y = correct labels
+        cache = dictionary containing all the intermediary values
+        alpha = learning rate
+
+        """
+        # fetching the training examples m and the number of layers L
+        m = Y.shape[1]
+        L = self.__L
+
+        # loop back performing the backpropagation
+        for i in range(L, 0, -1):
+            # checks if the layer is the outer layer L, if so dz is dA
+            if i == L:
+                dA = cache[f'A{L}'] - Y
+                dz = dA
+            else:
+                # if it isn't the outer layer, the hidden layer, compute dz
+                A = cache[f'A{i}']
+                dz = dA * A * (1 - A)
+
+            # calculates the gradient weights and biases then get avg
+            dw = np.matmul(dz, cache[f'A{i-1}'].T) / m
+            db = np.sum(dz, axis=1, keepdims=True) / m
+
+            # calculate and backpropagate the error in upcoming layer
+            dA = np.matmul(self.__weights[f'W{i}'].T, dz)
+
+            # updating weights and biases of the current layer
+            self.__weights[f'W{i}'] -= alpha * dw
+            self.__weights[f'b{i}'] -= alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """trains the deep neural network and returns the
         evaluation of the training data after iterations of
         training have occurred"""
+        if not isinstance(iterations, int):
+            raise TypeError("iterations must be an integer")
+        if iterations <= 0:
+            raise ValueError("iterations must be a positive integer")
+        if not isinstance(alpha, float):
+            raise TypeError("alpha must be a float")
+        if alpha <= 0:
+            raise ValueError("alpha must be positive")
+        # iterating over the range of iterations
+        for i in range(iterations):
+            # setting cache as a variable
+            cache = self.cache
+            # forward propagation
+            self.forward_prop(X)
+            # gradient_descent to get weights and adjust
+            self.gradient_descent(Y, cache, alpha)
+        # return the evaluation of the predicted/cost training data    
+        return self.evaluate(X, Y)
