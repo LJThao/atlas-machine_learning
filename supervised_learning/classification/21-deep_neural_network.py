@@ -125,7 +125,3 @@ class DeepNeuralNetwork():
             # updating weights and biases of the current layer
             self.__weights[f'W{i}'] -= alpha * dw
             self.__weights[f'b{i}'] -= alpha * db
-
-            # if current layer is greater than 1, then calculate dA (backprop)
-            if i > 1:
-                dA = np.matmul(self.__weights[f'W{i}'].T, dz)
