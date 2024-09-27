@@ -3,6 +3,7 @@
 network performing binary classification based on
 22-deep_neural_network.py"""
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class DeepNeuralNetwork():
@@ -140,13 +141,41 @@ class DeepNeuralNetwork():
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-        # iterating over the range of iterations
-        for i in range(iterations):
-            # setting cache as a variable
-            cache = self.cache
-            # forward propagation
-            self.forward_prop(X)
-            # gradient_descent to get weights and adjust
+        if graph or verbose:
+            if not isinstance(step, int):
+                raise TypeError("step must be an integer")
+            if step < 1 or step > iterations:
+                raise ValueError("step must be positive and <= iterations")
+
+        # storing costs and iterations to a list for the graph
+        if graph:
+            g_costs = []
+            g_iters = []
+
+        # using forward propagation and gradient descent
+        for iteration in range(iterations + 1):
+            # calling forward prop and returning values
+            A, cache = self.forward_prop(X)
             self.gradient_descent(Y, cache, alpha)
-        # return the evaluation of the predicted/cost training data    
+
+            # calculates the current cost and print at the set interval
+            if verbose and iteration % step == 0:
+                cost = self.cost(Y, A)
+                print(f"Cost after {iteration} iterations: {cost}")
+
+            # appending cost and iteration to the list
+            if graph and iteration % step == 0:
+                cost = self.cost(Y, A)
+                g_costs.append(cost)
+                g_iters.append(iteration)
+
+        # plotting the graph and then displaying
+        if graph:
+            plt.plot(g_costs, g_iters, color='blue')
+            plt.title('Training Cost')
+            plt.xlabel('iteration')
+            plt.ylabel('cost')
+            plt.show()
+
+        # returning the evaluation of the training data
         return self.evaluate(X, Y)
