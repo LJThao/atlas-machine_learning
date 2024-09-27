@@ -3,6 +3,8 @@
 network performing binary classification based on
 23-deep_neural_network.py"""
 import numpy as np
+import matplotlib.pyplot as plt
+import pickle
 
 
 class DeepNeuralNetwork():
@@ -178,3 +180,21 @@ class DeepNeuralNetwork():
 
         # returning the evaluation of the training data
         return self.evaluate(X, Y)
+
+    def save(self, filename):
+        """saves the instance object to a file in pickle format"""
+        if filename[-4:] != ('.pkl'):
+            filename += '.pkl'
+        with open(filename, 'wb') as pf:
+            pickle.dump(self, pf)
+    
+    def load(filename):
+        """loads a pickled DeepNeuralNetwork object"""
+        if filename[-4:] != ('pkl'):
+            filename += 'pkl'
+        try:
+            with open(filename, 'rb') as pf:
+                pickle.load(pf)
+        except Exception:
+            return None
+        return None
