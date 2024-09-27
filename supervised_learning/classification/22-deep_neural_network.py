@@ -140,8 +140,13 @@ class DeepNeuralNetwork():
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
+        # iterating over the range of iterations
         for i in range(iterations):
+            # setting cache as a variable
             cache = self.cache
+            # forward propagation
             self.forward_prop(X)
+            # gradient_descent to get weights and adjust
             self.gradient_descent(Y, cache, alpha)
+        # return the evaluation of the predicted/cost training data    
         return self.evaluate(X, Y)
