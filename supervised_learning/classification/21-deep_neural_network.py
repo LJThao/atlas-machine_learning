@@ -121,7 +121,7 @@ class DeepNeuralNetwork():
             dw = np.matmul(dz, cache[f'A{i-1}'].T) / m
             db = np.sum(dz, axis=1, keepdims=True) / m
 
-            # calculate and backpropagate the error for upcoming layer
+            # calculate and backpropagate the error in upcoming layer
             dA = np.matmul(self.__weights[f'W{i}'].T, dz)
 
             # updating weights and biases of the current layer
