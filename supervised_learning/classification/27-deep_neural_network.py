@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Class DeepNeuralNetwork that defines a deep neural
 network performing binary classification based on
-23-deep_neural_network.py"""
+26-deep_neural_network.py"""
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
