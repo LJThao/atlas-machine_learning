@@ -12,4 +12,16 @@ def create_layer(prev, n, activation):
     use
     
     """
-    
+    # implement using the He et. al initialization for layer weights
+    layer_weights = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    # create a dense layer with n, activates, initializes the weights,
+    # and name the layer
+    layer = tf.keras.layers.Dense(
+        units=n,
+        activation=activation,
+        kernel_initializer=layer_weights,
+        name='layer'
+        )
+    tensor_output = layer(prev)
+    # returns an output of each neuron passed on to the next layer
+    return tensor_output
