@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Forward Propagation Function"""
+import tensorflow.compat.v1 as tf
+create_layer = __import__('1-create_layer').create_layer
 
 
 def forward_prop(x, layer_sizes=[], activations=[]):
@@ -13,8 +15,6 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     each layer of the network
     
     """
-    # importing my create_layer function
-    create_layer = __import__('1-create_layer').create_layer
     # setting prediction to x
     prediction = x
     # forward propagation for each layer using zip to pair iterables
