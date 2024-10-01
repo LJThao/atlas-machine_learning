@@ -11,4 +11,7 @@ def calculate_loss(y, y_pred):
     y_pred = tensor containing the network's predictions
     
     """
-    
+    # calculating the soft max cross-entropy loss
+    tensor = tf.compat.v1.losses.softmax_cross_entropy(y, y_pred)
+    # returning a tensor containing the network's predictions
+    return tensor
