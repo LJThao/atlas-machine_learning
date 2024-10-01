@@ -5,12 +5,12 @@ import tensorflow.compat.v1 as tf
 
 def create_layer(prev, n, activation):
     """returns the tensor output of the layer:
-    
+
     prev = the previous layer of the tensor output
     n = number of nodes in the layer to create
     activation = activation function that the layer should
     use
-    
+
     """
     # implement using the He et. al initialization for layer weights
     layer_weights = tf.keras.initializers.VarianceScaling(mode='fan_avg')
