@@ -10,4 +10,7 @@ def create_train_op(loss, alpha):
     alpha = the learning rate
     
     """
-    
+    # create optimizer using the gradient descent with alpha
+    opt_op = tf.compat.v1.train.GradientDescentOptimizer(alpha)
+    # return operation that trains the network after minimizing loss
+    return opt_op.minimize(loss)
