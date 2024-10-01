@@ -16,7 +16,7 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     """
     # importing my create_layer function
     create_layer = __import__('1-create_layer').create_layer
-    # setting prediction to z
+    # setting prediction to x
     prediction = x
     # forward propagation for each layer using zip to pair iterables
     for nodes, activation in zip(layer_sizes, activations):
