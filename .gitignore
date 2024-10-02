@@ -42,8 +42,3 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Ignore checkpoint files
-model.ckpt.data-*
-model.ckpt.index
-model.ckpt.meta
-checkpoint
