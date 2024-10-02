@@ -53,7 +53,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
                 print(f"\tValidation Accuracy: {v_accuracy}")
             # training steps for adjusting the weight/loss function to predict
             sess.run(train_op, feed_dict={x: X_train, y: Y_train})
-        # the training model is saved to the path
-        save_path = model.save(sess, save_path)
+    # the training model is saved to the path
+    save_path = model.save(sess, save_path)
     # returns the path to the saved model
     return save_path
