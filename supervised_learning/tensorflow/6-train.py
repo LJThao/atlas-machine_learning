@@ -38,8 +38,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
     with tf.Session() as sess:
         sess.run(tf.compat.v1.global_variables_initializer())
         for i in range(iterations + 1):
-            sess.run(train_op, feed_dict={x: X_train, y: Y_train})
-    # 0th to 1000th iterations, then training and accuracy are printed
+            # 0th to 1000th iterations, then training and accuracy are printed
             if i % 100 == 0 or i == iterations:
                 t_cost, t_accuracy = sess.run(
                     [loss, accuracy], feed_dict={x: X_train, y: Y_train}
@@ -52,6 +51,8 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
                 print(f"\tTraining Accuracy: {t_accuracy}")
                 print(f"\tValidation Cost: {v_cost}")
                 print(f"\tValidation Accuracy: {v_accuracy}")
+            # training steps for adjusting the weight/loss function to predict
+            sess.run(train_op, feed_dict={x: X_train, y: Y_train})
         # the training model is saved to the path
         save_path = model.save(sess, save_path)
     # returns the path to the saved model
