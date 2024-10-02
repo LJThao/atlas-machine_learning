@@ -20,8 +20,6 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
     alpha = the learning rate
     iterations = the number of iterations to train over
     save_path = designates where to save the model
-    sess = a session
-    save_path = path where model is saved
 
     """
     # creating placeholders x and y that will train data(x) and labels(y)
@@ -38,7 +36,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
     model = tf.train.Saver()
     # initializing TF session and start training
     with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
+        sess.run(tf.compat.v1.global_variables_initializer())
         for i in range(iterations + 1):
             sess.run(train_op, feed_dict={x: X_train, y: Y_train})
     # 0th to 1000th iterations, then training and accuracy are printed
