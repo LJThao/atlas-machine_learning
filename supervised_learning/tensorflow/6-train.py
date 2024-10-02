@@ -32,8 +32,6 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
     accuracy = calculate_accuracy(y, y_pred)
     # using gradient descent to update the network's weights
     train_op = create_train_op(loss, alpha)
-    # initializing the model to save later
-    model = tf.train.Saver()
     # initializing TF session and start training
     with tf.Session() as sess:
         sess.run(tf.compat.v1.global_variables_initializer())
@@ -53,7 +51,9 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
                 print(f"\tValidation Accuracy: {v_accuracy}")
             # training steps for adjusting the weight/loss function to predict
             sess.run(train_op, feed_dict={x: X_train, y: Y_train})
-    # the training model is saved to the path
-    save_path = model.save(sess, save_path)
+        # initializing the model to save
+        model = tf.train.Saver()
+        # the training model is saved to the path
+        save_path = model.save(sess, save_path)
     # returns the path to the saved model
     return save_path
