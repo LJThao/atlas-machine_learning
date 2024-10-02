@@ -12,6 +12,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
     """builds, trains, and saves a neural network classifier:
 
     X_train = numpy.ndarry containing the training input data
+    Y_train = numpy.ndarray containing the training labels
     X_valid = numpy.ndarray containing the validation input data
     Y_valid = numpy.ndarray containing the validation labels
     layer_sizes = list containing the number of nodes in each layer of the network
@@ -19,5 +20,41 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations, alpha, i
     alpha = the learning rate
     iterations = the number of iterations to train over
     save_path = designates where to save the model
+    sess = a session
+    save_path = path where model is saved
 
     """
+    # creating placeholders x and y that will train data(x) and labels(y)
+    x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
+    # using forward prop function to get the predicted output
+    y_pred = forward_prop(x, layer_sizes, activations)
+    # using calculate loss function to compare y and y_pred, then calc loss
+    loss = calculate_loss(y, y_pred)
+    # computing the accuracy of y to see if it matches the true labels
+    accuracy = calculate_accuracy(y, y_pred)
+    # using gradient descent to update the network's weights
+    train_op = create_train_op(loss, alpha)
+    # initializing the model to save later
+    model = tf.train.Saver()
+    # initializing TF session and start training
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
+        for i in range(iterations + 1):
+            sess.run(train_op, feed_dict={x: X_train, y: Y_train})
+    # 0th to 1000th iterations, then training and accuracy are printed
+            if i % 100 == 0 or i == iterations:
+                t_cost, t_accuracy = sess.run(
+                    [loss, accuracy], feed_dict={x: X_train, y: Y_train}
+                )
+                v_cost, v_accuracy = sess.run(
+                    [loss, accuracy], feed_dict={x: X_valid, y: Y_valid}
+                )
+                print(f"After {i} iterations:")
+                print(f"\tTraining Cost: {t_cost}")
+                print(f"\tTraining Accuracy: {t_accuracy}")
+                print(f"\tValidation Cost: {v_cost}")
+                print(f"\tValidation Accuracy: {v_accuracy}")
+        # the training model is saved to the path
+        save_path = model.save(sess, save_path)
+    # returns the path to the saved model
+    return save_path
