@@ -15,3 +15,10 @@ def update_variables_RMSProp(alpha, beta2, epsilon, var, grad, s):
     s = the previous second moment of var
 
     """
+    # use Root Mean Square Propagation optimization algorithm to update the s
+    new_s = (beta2 * s) + (1 - beta2) * (grad ** 2)
+    # use the updated s to adjust alpha for each parameter
+    updated_var = var - alpha * grad / ((new_s ** 0.5) + epsilon)
+
+    # returns the updated variable and the new moment
+    return (updated_var, new_s)
