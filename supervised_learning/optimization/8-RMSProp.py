@@ -15,8 +15,7 @@ def create_RMSProp_op(alpha, beta2, epsilon):
     # setting up using Keras API to create RMSProp optimizer
     rms_optimizer = tf.keras.optimizers.RMSprop(learning_rate=alpha,
                                                 rho=beta2,
-                                                epsilon=epsilon
-    )
-    
+                                                epsilon=epsilon)
+
     # returns optimizer
     return (rms_optimizer)
