@@ -8,8 +8,12 @@ def create_RMSProp_op(alpha, beta2, epsilon):
     in TensorFlow:
 
     alpha = the learning rate
-    beta2 = the RMSProp weight (Discounting factor)
+    beta2 = the RMSProp weight (rho/discounting factor), between 0 to 1
     epsilon = a small number to avoid division by zero
 
     """
-    
+    # setting up using Keras API to create RMSProp optimizer
+    rms_optimizer = tf.keras.optimizers.RMSprop(learning_rate=alpha, rho=beta2, epsilon=epsilon)
+
+    # returns optimizer
+    return (rms_optimizer)
