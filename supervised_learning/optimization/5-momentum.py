@@ -16,7 +16,7 @@ def update_variables_momentum(alpha, beta1, var, grad, v):
     """
     # updates the moment with momentum
     new_mom = (beta1 * v) + ((1 - beta1) * grad)
-    # updates the variable with alpha and beta1
+    # updates the variable with alpha and new moment v
     updated_var = var - (alpha * new_mom)
 
     # returns the updated variable and the new moment
