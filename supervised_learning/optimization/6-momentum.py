@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Momentum Upgraded Function"""
-import numpy as np
+import tensorflow as tf
 
 
 def create_momentum_op(alpha, beta1):
@@ -11,4 +11,4 @@ def create_momentum_op(alpha, beta1):
     beta1 = the momentum weight.
 
     """
-    
+
