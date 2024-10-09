@@ -6,11 +6,11 @@ import numpy as np
 def normalization_constants(X):
     """Function that calculates the normalization (standardization)
     constants of a matrix:
-    
+
     X = the numpy.ndarray of shape (m, nx) to normalize
     ->    m = number of data points
     ->    nx = number of features
-    
+
     """
     # calculates the mean of each column in the matrix
     mean = np.mean(X, axis=0)
