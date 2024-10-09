@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Mini-Batch Function"""
 import numpy as np
+shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
 def create_mini_batches(X, Y, batch_size):
@@ -16,4 +17,3 @@ def create_mini_batches(X, Y, batch_size):
     batch_size = the number of data points in a batch
 
     """
-    
