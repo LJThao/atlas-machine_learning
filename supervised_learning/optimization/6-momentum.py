@@ -11,4 +11,8 @@ def create_momentum_op(alpha, beta1):
     beta1 = the momentum weight.
 
     """
+    # creates an momentum optimizer with alpha and beta1
+    optimizer = tf.compat.v1.train.MomentumOptimizer(alpha, beta1)
 
+    # returns optimizer
+    return (optimizer)
