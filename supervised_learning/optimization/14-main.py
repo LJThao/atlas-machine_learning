@@ -15,7 +15,7 @@ tf.random.set_seed(SEED)
 
 create_batch_norm_layer = __import__('14-batch_norm').create_batch_norm_layer
 
-lib= np.load('MNIST.npz')
+lib= np.load('/root/atlas-machine_learning/supervised_learning/classification/data/MNIST.npz')
 X_3D = lib['X_train']
 X = X_3D.reshape((X_3D.shape[0], -1))
 
