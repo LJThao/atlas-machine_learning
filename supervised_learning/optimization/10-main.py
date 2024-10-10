@@ -22,13 +22,13 @@ def one_hot(Y, classes):
     one_hot[np.arange(Y.shape[0]), Y] = 1
     return one_hot
 
-lib = np.load('MNIST.npz')
+lib = np.load('/root/atlas-machine_learning/supervised_learning/classification/data/MNIST.npz')
 X_3D = lib['X_train']
 Y = lib['Y_train']
 X = X_3D.reshape((X_3D.shape[0], -1))
 Y_oh=one_hot(Y,10)
 
-model = tf.keras.models.load_model('model.h5', compile=False)
+model = tf.keras.models.load_model('/root/atlas-machine_learning/supervised_learning/optimization/model/model.h5', compile=False)
 
 optimizer=create_Adam_op(0.001, 0.9, 0.999, 1e-7)
 
