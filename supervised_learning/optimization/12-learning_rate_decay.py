@@ -13,4 +13,13 @@ def learning_rate_decay(alpha, decay_rate, decay_step):
     alpha is decayed further
 
     """
-    
+    # use keras API module to create the learning rate decay op
+    decayed_learning_rate = tf.keras.optimizers.schedules.InverseTimeDecay(
+        initial_learning_rate=alpha,
+        decay_steps=decay_step,
+        decay_rate=decay_rate,
+        staircase=True
+    )
+
+    # returns the learning rate decay operation
+    return (decayed_learning_rate)
