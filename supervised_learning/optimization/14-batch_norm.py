@@ -14,18 +14,28 @@ def create_batch_norm_layer(prev, n, activation):
 
     """
     # adding a dense layer
+    init = tf.keras.initializers.VarianceScaling(mode='fan_avg')
     dense_layer = tf.keras.layers.Dense(
         units=n,
         activation=None,
-        kernel_initializer=tf.keras.initializers.VarianceScaling(mode='fan_avg')
+        kernel_initializer=init
     )(prev)
+    # calculate mean and var using moments function
+    mean, var = tf.nn.moments(dense_layer, axes=0)
+    # incorporating trainable parameters gamma and betta as 1 and 0
+    beta = tf.Variable(tf.zeros([n]), trainable=True)
+    gamma = tf.Variable(tf.ones([n]), trainable=True)
+    # epsilon set
+    epsilon = 1e-7
+    # input tensor x set
+    x = dense_layer
     # batch normalization layer
-    bn_layer = tf.keras.layers.BatchNormalization(
-        axis=-1,
-        epsilon=1e-7,
-        beta_initializer='zeros',
-        gamma_initializer='ones'
-    )(dense_layer)
+    bn_layer = tf.nn.batch_normalization(x,
+                                         mean,
+                                         var,
+                                         beta,
+                                         gamma,
+                                         epsilon)
     # applying activation function
     tensor = activation(bn_layer)
 
