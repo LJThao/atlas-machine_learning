@@ -13,3 +13,21 @@ def create_batch_norm_layer(prev, n, activation):
     output of the layer
 
     """
+    # adding a dense layer
+    dense_layer = tf.keras.layers.Dense(
+        units=n,
+        activation=None,
+        kernel_initializer=tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    )(prev)
+    # batch normalization layer
+    bn_layer = tf.keras.layers.BatchNormalization(
+        axis=-1,
+        epsilon=1e-7,
+        beta_initializer='zeros',
+        gamma_initializer='ones'
+    )(dense_layer)
+    # applying activation function
+    tensor = activation(bn_layer)
+
+    # returns a tensor of the activated output for the layer
+    return (tensor)
