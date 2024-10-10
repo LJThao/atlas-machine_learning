@@ -18,4 +18,15 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     t = the time step used for bias correction
 
     """
-    
+    # updating first and second moments
+    v = (beta1 * v) + (1 - beta1) * grad
+    s = (beta2 * s) + (1 - beta2) * (grad ** 2)
+    # bias corrections for them
+    v_bias_correct = ((v / (1 - beta1 ** t)))
+    s_bias_correct = ((s / (1 - beta2 ** t)))
+
+    # updating the variable using the Adam optimization
+    updated_var = var - alpha * v_bias_correct / (np.sqrt(s_bias_correct) + epsilon)
+
+    # returns the updated variable, new first moment, new second moment
+    return (updated_var, v, s)
