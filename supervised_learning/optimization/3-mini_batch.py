@@ -17,16 +17,15 @@ def create_mini_batches(X, Y, batch_size):
     batch_size = the number of data points in a batch
 
     """
-    p = np.random.permutation(X.shape[0])
     # shuffling the data points
-    X[p], Y[p] = shuffle_data(X, Y)
+    X, Y = shuffle_data(X, Y)
     # initialize an empty list, setting m for the data points
     mini_batches = []
     m = X.shape[0]
     # for loop for creating mini-batches
     for i in range(0, m, batch_size):
-        X_batch = X[p][i:i + batch_size]
-        Y_batch = Y[p][i:i + batch_size]
+        X_batch = X[i:i + batch_size]
+        Y_batch = Y[i:i + batch_size]
         mini_batches.append((X_batch, Y_batch))
 
     # returns the list of mini-batches containing tuples (X_batch, Y_batch)
