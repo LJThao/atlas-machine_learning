@@ -13,12 +13,12 @@ def precision(confusion):
         -> classes is the number of classes
 
     """
-    # getting the true positives for each diagonally from the matrix
+    # getting the true positives for each class diagonally from the matrix
     true_pos = np.diag(confusion)
     # calculating the false positives: summing then subtract the true positives
     false_pos = np.sum(confusion, axis=0) - true_pos
-    # calculating the sensitivity for each class
+    # calculating the precision for each class
     precision = true_pos / (true_pos + false_pos)
-
+    
     # returns shape (classes,) containing the precision of each class
     return (precision)
