@@ -14,4 +14,8 @@ def create_confusion_matrix(labels, logits):
     predicted labels
 
     """
-    
+    # transpose the labels and perform matrix multiplication with the logits
+    confusion_matrix = np.matmul(labels.T, logits)
+
+    # returns confusion matrix (classes, classes)
+    return (confusion_matrix)
