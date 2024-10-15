@@ -19,6 +19,6 @@ def precision(confusion):
     false_pos = np.sum(confusion, axis=0) - true_pos
     # calculating the precision for each class
     precision = true_pos / (true_pos + false_pos)
-    
+
     # returns shape (classes,) containing the precision of each class
     return (precision)
