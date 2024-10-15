@@ -13,4 +13,12 @@ def sensitivity(confusion):
         -> classes is the number of classes
 
     """
-    
+    # getting the true positives for each diagonally from the matrix
+    true_pos = np.diag(confusion)
+    # calculating the false positives: summing then subtract the true positives
+    false_neg = np.sum(confusion, axis=1) - true_pos
+    # calculating the sensitivity for each class
+    sensitivity = true_pos / (true_pos + false_neg)
+
+    # returns a shape (classes,) that contains the sensitivity of each class
+    return sensitivity
