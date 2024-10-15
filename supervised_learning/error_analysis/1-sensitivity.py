@@ -19,6 +19,6 @@ def sensitivity(confusion):
     false_neg = np.sum(confusion, axis=1) - true_pos
     # calculating the sensitivity for each class
     sensitivity = true_pos / (true_pos + false_neg)
-    
+
     # returns a shape (classes,) that contains the sensitivity of each class
     return (sensitivity)
