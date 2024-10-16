@@ -24,7 +24,6 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     for layer in range(L, 0, -1):
         # get the A and prev activations from cache
         A = cache[f'A{layer}']
-        A_prev = cache[f'A{layer - 1}'] if layer > 1 else cache['A0']
 
         # calculate dZ
         if layer == L:
@@ -34,14 +33,12 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
 
         # calculate l2, dW, and db
         l2 = (lambtha / m) * weights[f'W{layer}']
-        dW = (np.matmul(dZ, A_prev.T) / m) + l2
-        db = np.sum(dZ, axis=1, keepdims=True) / m
-
-        # updates weights and biases using gradient descent
-        updated_weights = weights[f'W{layer}'] - (alpha * dW)
-        updated_biases = weights[f'b{layer}'] - (alpha * db)
-        weights[f'W{layer}'] = updated_weights
-        weights[f'b{layer}'] = updated_biases
+        dW = (np.matmul(dZ, cache[f'A{layer-1}'].T) / m) + l2
+        dB = np.sum(dZ, axis=1, keepdims=True) / m
 
         # calculate dA for the next layer
         dA = np.matmul(weights[f'W{layer}'].T, dZ)
+
+        # updates weights and biases using gradient descent
+        weights[f'W{layer}'] -= alpha * dW
+        weights[f'b{layer}'] -= alpha * dB
