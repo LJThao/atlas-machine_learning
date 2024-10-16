@@ -15,10 +15,11 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     alpha = the learning rate
     lambtha = the L2 regularization parameter
     L = the number of layers of the network
-
+    
     """
     # gets the # of training examples from shape of the label mat Y
     m = Y.shape[1]
+    dA = cache[f'A{L}'] - Y
 
     # iterate from the last layer to the first to perform backprop
     for layer in range(L, 0, -1):
@@ -26,8 +27,11 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         A = cache[f'A{layer}']
         A_prev = cache[f'A{layer - 1}'] if layer > 1 else cache['A0']
 
-        # calculate dZ, use tanh for hidden then softmax for outer layer
-        dZ = (A - Y) if layer == L else dA * (1 - np.square(A))
+        if layer == L:
+            dZ = dA
+        else:
+            dZ = dA * (1 - np.square(A))
+
         # calculate dW with l2 regularization
         dW = (np.matmul(dZ, A_prev.T) / m) + (lambtha / m) * weights[f'W{layer}']
 
