@@ -14,7 +14,8 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
 
     """
     # initialize weights with variance scaling
-    init_weights = tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg"))
+    init_weights = tf.keras.initializers.VarianceScaling(scale=2.0,
+                                                         mode=("fan_avg"))
     # applying the L2 regularization
     l2_reg = tf.keras.regularizers.L2(lambtha)
 
