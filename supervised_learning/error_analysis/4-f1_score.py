@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """F1 Score Function"""
 import numpy as np
+sensitivity = __import__('1-sensitivity').sensitivity
+precision = __import__('2-precision').precision
 
 
 def f1_score(confusion):
@@ -12,4 +14,3 @@ def f1_score(confusion):
     classes = the number of classes
 
     """
-    
