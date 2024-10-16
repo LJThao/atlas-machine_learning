@@ -1,6 +1,8 @@
 # Ignore Python bytecode
 __pycache__/
 *.py[cod]
+*.npz
+*main.py
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -47,7 +49,3 @@ model.ckpt.data-*
 model.ckpt.index
 model.ckpt.meta
 checkpoint
-
-# Ignore NPZ and main files
-*.npz
-*main.py
