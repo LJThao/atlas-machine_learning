@@ -15,3 +15,8 @@ def early_stopping(cost, opt_cost, threshold, patience, count):
     -> count = the count of how long the threshold has not been met
 
     """
+    # reset the count if the cost improve, alternatively increment
+    count = 0 if cost < opt_cost - threshold else count + 1
+
+    # returns a boolean, followed by the updated count
+    return (count >= patience), count
