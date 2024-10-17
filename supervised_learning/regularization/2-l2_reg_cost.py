@@ -13,7 +13,7 @@ def l2_reg_cost(cost, model):
 
     """
     # creates an empty list to store the costs
-    l2_costs= []
+    l2_costs = []
     # add the l2 losses from each layer to the cost
     for l2_loss in model.losses:
         l2_costs.append(cost + l2_loss)
