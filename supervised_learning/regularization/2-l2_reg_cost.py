@@ -12,4 +12,4 @@ def l2_reg_cost(cost, model):
     model = a Keras model that includes layers with L2 regularization
 
     """
-    
+    return cost + tf.reduce_sum(model.losses)
