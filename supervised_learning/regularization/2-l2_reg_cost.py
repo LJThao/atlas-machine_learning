@@ -12,4 +12,13 @@ def l2_reg_cost(cost, model):
     model = a Keras model that includes layers with L2 regularization
 
     """
-    return cost + tf.reduce_sum(model.losses)
+    # creates an empty list to store the costs
+    l2_costs= []
+    # add the l2 losses from each layer to the cost
+    for l2_loss in model.losses:
+        l2_costs.append(cost + l2_loss)
+    # converts the list of layers into one tensor
+    tensor_cost = tf.convert_to_tensor(l2_costs)
+
+    # returns a tensor containing the total cost for each layer with L2 reg
+    return (tensor_cost)
