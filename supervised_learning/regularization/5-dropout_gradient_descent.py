@@ -45,4 +45,4 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
 
         # updates the weights and biases using gradient descent
         weights[w] -= alpha * dW
-        weights[w] -= alpha * db
+        weights[b] -= alpha * db
