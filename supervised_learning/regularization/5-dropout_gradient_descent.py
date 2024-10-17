@@ -22,7 +22,7 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     -> The weights of the network should be updated in place
 
     """
-    # setting inverse m to the number of samples
+    # calculate m as the inverse of the number of samples
     m = 1 / Y.shape[1]
     # compute dZ using values of cache
     dZ = cache[f'A{L}'] - Y
