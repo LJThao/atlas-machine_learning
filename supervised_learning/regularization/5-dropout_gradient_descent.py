@@ -32,7 +32,7 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
         A_prev = cache[f'A{layer - 1}']
         w, b = f'W{layer}', f'b{layer}'
         dW = m * np.matmul(dZ, A_prev.T)
-        db = m * np.sum(dZ, axis=1, keepdims=True) 
+        db = m * np.sum(dZ, axis=1, keepdims=True)
 
         # if not the first layer, compute the gradient for prev layer
         if layer > 1:
