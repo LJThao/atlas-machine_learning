@@ -22,3 +22,27 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     -> The weights of the network should be updated in place
 
     """
+    # setting m to the number of samples
+    m = Y.shape[1]
+    # compute dZ using values of cache
+    dZ = cache[f'A{L}'] - Y
+
+    # iterate over the layers in reverse backprop
+    for layer in reversed(range(1, L + 1)):
+        A_prev = cache[f'A{layer - 1}']
+        w, b = f'W{layer}', f'b{layer}'
+        dW = np.matmul(dZ, A_prev.T) / m
+        db = np.sum(dZ, axis=1, keepdims=True) / m 
+
+        # if not the first layer, compute the gradient for prev layer
+        if layer > 1:
+            # dropout mask for the prev layer
+            D = cache[f'D{layer - 1}']
+            # backprop using tanh
+            dA_prev = np.matmul(weights[w].T, dZ) * (1 - A_prev ** 2)
+            # apply drop then scale
+            dZ = (dA_prev * D) / keep_prob
+
+        # updates the weights and biases using gradient descent
+        weights[w] -= alpha * dW
+        weights[w] -= alpha * db
