@@ -34,7 +34,7 @@ def train_model(network, data, labels, batch_size, epochs,
             verbose=1
         ))
 
-    # trains the model using keras fit function -- added callbacks
+    # trains the model using keras fit function
     history_obj = network.fit(data,
                               labels,
                               batch_size=batch_size,
