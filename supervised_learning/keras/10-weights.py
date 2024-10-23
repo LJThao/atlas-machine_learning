@@ -15,7 +15,7 @@ def save_weights(network, filename, save_format='keras'):
     # save weights
     network.save_weights(filename,
                          save_format=save_format)
-    
+
     return (None)
 
 
