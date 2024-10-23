@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Optimize Model with a Keras Module"""
+"""The Optimize Model with Keras Module"""
 import tensorflow.keras as K
 
 
@@ -13,4 +13,3 @@ def optimize_model(network, alpha, beta1, beta2):
     beta2 = the second Adam optimization parameter
 
     """
-    
