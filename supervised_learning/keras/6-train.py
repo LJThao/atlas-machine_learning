@@ -16,14 +16,22 @@ def train_model(network, data, labels, batch_size, epochs,
     patience = the patience used for early stopping
 
     """
-    # trains the model using keras fit function -- now added validation data
+    # add early stopping callback if valid data exists
+    callbacks = (
+        [K.callbacks.EarlyStopping(patience=patience)]
+        if early_stopping and validation_data
+        else []
+    )
+
+    # trains the model using keras fit function -- added callbacks
     history_obj = network.fit(data,
                               labels,
                               batch_size=batch_size,
                               epochs=epochs,
                               verbose=verbose,
                               shuffle=shuffle,
-                              validation_data=validation_data)
+                              validation_data=validation_data,
+                              callbacks=callbacks)
 
     # returns the history object generated after training
     return (history_obj)
