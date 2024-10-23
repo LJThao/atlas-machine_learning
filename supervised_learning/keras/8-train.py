@@ -32,8 +32,7 @@ def train_model(network, data, labels, batch_size, epochs,
     # add save best to save the best model
     if save_best:
         callbacks.append(K.callbacks.ModelCheckpoint(filepath=filepath,
-                                                    save_best_only=True,
-                                                    verbose=1))
+                                                    save_best_only=True))
 
     # trains the model using keras fit function
     history_obj = network.fit(data,
