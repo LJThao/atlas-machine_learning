@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One Hot Module"""
+"""One Hot Module with Keras"""
 import tensorflow.keras as K
 
 
@@ -10,4 +10,5 @@ def one_hot(labels, classes=None):
     and returns one-hot matrix
 
     """
-
+    # returns a one-hot matrix using Keras
+    return K.utils.to_categorical(labels, classes)
