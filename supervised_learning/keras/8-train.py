@@ -10,8 +10,10 @@ def train_model(network, data, labels, batch_size, epochs,
                 save_best=False, filepath=None, verbose=True, shuffle=False):
     """Function to also save the best iteration of the model:
 
-    save_best = a boolean indicating whether to save the model after each epoch if it is the best
-    a model = considered the best if its validation loss is the lowest that the model has obtained
+    save_best = a boolean indicating whether to save the model after each
+    epoch if it is the best
+    a model = considered the best if its validation loss is the lowest that
+    the model has obtained
     filepath = the file path where the model should be saved
 
     """
@@ -32,7 +34,7 @@ def train_model(network, data, labels, batch_size, epochs,
     # add save best to save the best model
     if save_best:
         callbacks.append(K.callbacks.ModelCheckpoint(filepath=filepath,
-                                                    save_best_only=True))
+                                                     save_best_only=True))
 
     # trains the model using keras fit function
     history_obj = network.fit(data,
