@@ -22,4 +22,13 @@ def train_model(network, data, labels, batch_size, epochs, verbose=True,
     Returns: the History object generated after training the model
 
     """
-    
+    # trains the model using keras fit function
+    history_obj = network.fit(data,
+                              labels,
+                              batch_size=batch_size,
+                              epochs=epochs,
+                              verbose=verbose,
+                              shuffle=shuffle)
+
+    # returns the history object generated after training
+    return (history_obj)
