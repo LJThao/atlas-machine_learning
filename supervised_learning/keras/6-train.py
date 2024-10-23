@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Updated Train Model using Keras Module -
-Based on 5-train.py"""
+Based on 5-train.py - Early Stopping"""
 import tensorflow.keras as K
 
 
