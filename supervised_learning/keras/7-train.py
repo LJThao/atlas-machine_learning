@@ -27,6 +27,13 @@ def train_model(network, data, labels, batch_size, epochs,
         else []
     )
 
+    # add learning rate decay call back
+    if learning_rate_decay and validation_data:
+        callbacks.append(K.callbacks.LearningRateScheduler(
+            lambda epoch: alpha / (1 + decay_rate * epoch),
+            verbose=1
+        ))
+
     # trains the model using keras fit function -- added callbacks
     history_obj = network.fit(data,
                               labels,
