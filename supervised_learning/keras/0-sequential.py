@@ -14,7 +14,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     lambtha = the L2 regularization parameter
     keep_prob = the probability that a node will be kept for dropout
     """
-    # init the sequential model 
+    # init the sequential model
     model = K.models.Sequential()
     # add the input dense layer
     model.add(K.layers.Dense(layers[0], activation=activations[0],
@@ -23,7 +23,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     # iterate through the layers
     for layer in range(1, len(layers)):
         # adding dropout to the hidden layers
-        model.add(K.layers.Dropout(rate = 1 - keep_prob))
+        model.add(K.layers.Dropout(rate=1-keep_prob))
         # then add the dense layer for current layer
         model.add(K.layers.Dense(
             units=layers[layer],
