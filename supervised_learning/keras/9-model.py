@@ -11,11 +11,10 @@ def save_model(network, filename):
     Returns: None
 
     """
+    # saves the model
+    network.save(filename)
 
-
-
-
-
+    return (None)
 
 def load_model(filename):
     """Function loads an entire model:
@@ -24,3 +23,7 @@ def load_model(filename):
     Returns: the loaded model
 
     """
+    # loads the model
+    loaded_model = K.models.load_model(filename)
+
+    return (loaded_model)
