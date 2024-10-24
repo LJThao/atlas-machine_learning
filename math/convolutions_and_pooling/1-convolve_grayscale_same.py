@@ -19,4 +19,29 @@ def convolve_grayscale_same(images, kernel):
     Returns: a numpy.ndarray containing the convolved images
 
     """
-    
+    # unpack images and kernel
+    (m, h, w), (kh, kw) =  images.shape, kernel.shape
+
+    # calculate the padding size
+    pad_h = (kh - 1) // 2
+    pad_w = (kw - 1) // 2
+
+    # pad the images with zeros
+    padded_images = np.pad(images, ((0, 0),
+                                    (pad_h, pad_h),
+                                    (pad_w, pad_w)),
+                                    mode='constant')
+
+    # init the output
+    convolved_images = np.zeros((m, h, w))
+
+    # apply convolution using tensordot function
+    for y in range(h):
+        for x in range(w):
+            convolved_images[:, y, x] = np.tensordot(
+                padded_images[:, y:y + kh, x:x + kw],
+                kernel, axes=((1, 2), (0, 1))
+            )
+
+    # return a numpy.ndarry containing the convolved images
+    return (convolved_images)
