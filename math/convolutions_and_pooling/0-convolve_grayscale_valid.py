@@ -41,4 +41,3 @@ def convolve_grayscale_valid(images, kernel):
 
     # return a numpy.ndarry containing the convolved images
     return (convolved_images)
-    
