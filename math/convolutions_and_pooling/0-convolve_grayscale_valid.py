@@ -18,7 +18,7 @@ def convolve_grayscale_valid(images, kernel):
     You are only allowed to use two for loops; any other loops of any kind
     are not allowed
     Returns: a numpy.ndarray containing the convolved images
-    
+
     """
     # calculate the output
     m = images.shape[0]
@@ -34,10 +34,11 @@ def convolve_grayscale_valid(images, kernel):
     # apply convolution
     for y in range(output_h):
         for x in range(output_w):
-            # Apply tensordot function
+            # apply tensordot function
             convolved_images[:, y, x] = np.tensordot(
                 images[:, y:y + kh, x:x + kw],
                 kernel, axes=((1, 2), (0, 1)))
 
     # return a numpy.ndarry containing the convolved images
     return (convolved_images)
+    
