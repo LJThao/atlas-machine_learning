@@ -63,7 +63,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
 
     # init the output
     convolved_images = np.zeros((m, output_h, output_w))
- 
+
     # apply convolution
     for y in range(output_h):
         for x in range(output_w):
@@ -80,6 +80,6 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                 kernel,
                 axes=((1, 2, 3), (0, 1, 2))
             )
-    
+
     # return a numpy.ndarray containing the convolved images
     return (convolved_images)
