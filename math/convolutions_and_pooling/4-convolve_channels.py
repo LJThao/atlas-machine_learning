@@ -74,6 +74,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                 x * sw:x * sw + kw,
                 :
             ]
+
             # apply tensordot function
             convolved_images[:, y, x] = np.tensordot(
                 current_stride,
