@@ -83,6 +83,5 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
                     axes=((1, 2, 3), (0, 1, 2))
                 )
 
-    
     # return a numpy.ndarray containing the convolved images
     return (convolved_images)
