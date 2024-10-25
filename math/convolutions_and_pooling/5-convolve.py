@@ -77,6 +77,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
                     x * sw:x * sw + kw,
                     :
                 ]
+
                 # apply tensordot function with kernels
                 convolved_images[:, y, x, k] = np.tensordot(
                     current_stride, kernels[:, :, :, k],
