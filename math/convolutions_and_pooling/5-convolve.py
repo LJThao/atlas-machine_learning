@@ -62,7 +62,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
     # calculate output height and width
     output_h = (h + 2 * pad_h - kh) // sh + 1
     output_w = (w + 2 * pad_w - kw) // sw + 1
-    
+
     # init the outcome
     convolved_images = np.zeros((m, output_h, output_w, nc))
 
