@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Pool(images, kernel_shape, stride, mode='max'): Module
 -- Pooling"""
 import numpy as np
