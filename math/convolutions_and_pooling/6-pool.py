@@ -48,11 +48,14 @@ def pool(images, kernel_shape, stride, mode='max'):
                 x * sw : x * sw + kw,
                 :
             ]
+
             # applying the operation for pooling (max and avg)
             if mode == 'max':
-                pooled_images[:, y, x, :] = np.max(current_stride, axis=(1, 2))
+                pooled_images[:, y, x, :] = np.max(
+                    current_stride, axis=(1, 2))
             elif mode == 'avg':
-                pooled_images[:, y, x, :] = np.mean(current_stride, axis=(1, 2))
+                pooled_images[:, y, x, :] = np.mean(
+                    current_stride, axis=(1, 2))
 
     # returns a numpy.ndarray containing the pooled images
     return (pooled_images)
