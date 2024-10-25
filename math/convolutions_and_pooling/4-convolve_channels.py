@@ -70,8 +70,8 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
             # retrieve the current stride region
             current_stride = padded_images[
                 :,
-                y * sh : y * sh + kh,
-                x * sw : x * sw + kw,
+                y * sh:y * sh + kh,
+                x * sw:x * sw + kw,
                 :
             ]
             # apply tensordot function
