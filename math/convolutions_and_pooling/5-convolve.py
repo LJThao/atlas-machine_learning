@@ -55,7 +55,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
     padded_images = np.pad(
         images,
         ((0, 0),
-         (pad_h, pad_h), 
+         (pad_h, pad_h),
          (pad_w, pad_w),
          (0, 0)),
     )
