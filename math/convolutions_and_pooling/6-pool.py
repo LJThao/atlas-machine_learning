@@ -44,8 +44,8 @@ def pool(images, kernel_shape, stride, mode='max'):
             # retrieve the current stride region and kernel size
             current_stride = images[
                 :,
-                y * sh : y * sh + kh,
-                x * sw : x * sw + kw,
+                y * sh:y * sh + kh,
+                x * sw:x * sw + kw,
                 :
             ]
 
