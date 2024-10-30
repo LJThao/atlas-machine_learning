@@ -35,3 +35,67 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     (dA_prev), the kernels (dW), and the biases (db), respectively
 
     """
+    # unpack dZ, A_prev, W
+    (m, h_new, w_new, c_new) = dZ.shape
+    (m, h_prev, w_prev, c_prev) = A_prev.shape
+    (kh, kw, _, _) = W.shape
+    (sh, sw) = stride
+
+    # init dA_prev, dW, db
+    dA_prev = np.zeros_like(A_prev)
+    dW = np.zeros_like(W)
+    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
+
+    # determining padding
+    if padding == "same":
+        pad_h = (((h_prev - 1) * sh + kh - h_new) // 2)
+        pad_w = (((w_prev - 1) * sw + kw - w_new) // 2)
+    else:
+        pad_h, pad_w = 0, 0
+
+    # pad the A_prev and dA_prev for backpropagation
+    A_prev_pad = np.pad(
+        A_prev,
+        ((0, 0),
+         (pad_h, pad_h),
+         (pad_w, pad_w),
+         (0, 0))
+    )
+    dA_prev_pad = np.pad(
+        dA_prev,
+        ((0, 0),
+         (pad_h, pad_h),
+         (pad_w, pad_w),
+         (0, 0))
+    )
+
+    # apply backpropagation over the convolution
+    for i in range(m):
+        a_prev_pad = A_prev_pad[i]
+        da_prev_pad = dA_prev_pad[i]
+
+        for y in range(h_new):
+            for x in range(w_new):
+                for c in range(c_new):
+
+                    # determining the slice coordinates
+                    y_start = y * sh
+                    y_end = y_start + kh
+                    x_start = x * sw
+                    x_end = x_start + kw
+
+                    # slice the A_prev and update gradients
+                    a_slice = a_prev_pad[y_start:y_end, x_start:x_end, :]
+
+                    # update gradients for the window
+                    da_prev_pad[y_start:y_end, x_start:x_end, :] += W[:, :, :, c] * dZ[i, y, x, c]
+                    dW[:, :, :, c] += a_slice * dZ[i, y, x, c]
+
+        # unpadding the dA_prev
+        if padding == "same":
+            dA_prev[i, :, :, :] = da_prev_pad[pad_h:-pad_h, pad_w:-pad_w, :]
+        else:
+            dA_prev[i, :, :, :] = da_prev_pad
+
+    # returns the previous layer, kernels, and biases
+    return (dA_prev, dW, db)
