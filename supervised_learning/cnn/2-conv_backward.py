@@ -88,7 +88,9 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     a_slice = a_prev_pad[y_start:y_end, x_start:x_end, :]
 
                     # update gradients for the window
-                    da_prev_pad[y_start:y_end, x_start:x_end, :] += W[:, :, :, c] * dZ[i, y, x, c]
+                    da_prev_pad[
+                        y_start:y_end,
+                        x_start:x_end, :] += W[:, :, :, c] * dZ[i, y, x, c]
                     dW[:, :, :, c] += a_slice * dZ[i, y, x, c]
 
         # unpadding the dA_prev
