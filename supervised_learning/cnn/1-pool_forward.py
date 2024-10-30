@@ -26,3 +26,34 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode='max'):
     Returns: the output of the pooling layer
 
     """
+    # unpack
+    (m, h_prev, w_prev, c_prev) = A_prev.shape
+    (kh, kw) = kernel_shape
+    (sh, sw) = stride
+
+    # calculate the outputs of h and w
+    h_new = (h_prev - kh) // sh + 1
+    w_new = (w_prev - kw) // sw + 1
+
+    # init the output
+    output_mat = np.zeros((m, h_new, w_new, c_prev))
+
+    # apply the pooling operation
+    for y in range(h_new):
+        for x in range(w_new):
+            y_start = y * sh
+            y_end = y_start + kh
+            x_start = x * sw
+            x_end = x_start + kw
+
+            # extracts the region of the input for pooling
+            region = A_prev[:, y_start:y_end, x_start:x_end, :]
+
+            # applying max and avg to each region
+            if mode == 'max':
+                output_mat[:, y, x, :] = np.max(region, axis=(1, 2))
+            elif mode == 'avg':
+                output_mat[:, y, x, :] = np.mean(region, axis=(1, 2))
+
+    # returns output of the pooling layer
+    return (output_mat)
