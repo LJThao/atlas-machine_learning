@@ -54,15 +54,25 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
 
                     # apply backprop for max pooling
                     if mode == 'max':
-                        pool_slice = A_prev[i, y_start:y_end, x_start:x_end, c_]
+                        pool_slice = A_prev[
+                            i,
+                            y_start:y_end,
+                            x_start:x_end,
+                            c_
+                        ]
                         mask = (pool_slice == np.max(pool_slice))
-                        dA_prev[i, y_start:y_end, x_start:x_end, c_] += mask * dA[i, y, x, c_]
+                        dA_prev[i,
+                                y_start:y_end, x_start:x_end,
+                                c_] += mask * dA[i, y, x, c_]
 
                     # apply backprop for avg pooling
                     elif mode == 'avg':
                         da = dA[i, y, x, c_]
                         average = da / (kh * kw)
-                        dA_prev[i, y_start:y_end, x_start:x_end, c_] += np.ones((kh, kw)) * average
+                        dA_prev[i,
+                                y_start:y_end,
+                                x_start:x_end,
+                                c_] += np.ones((kh, kw)) * average
 
     # returns the partial derivatives with respect to the previous layer
     return (dA_prev)
