@@ -29,3 +29,39 @@ def lenet5(X):
     hyperparameters) and accuracy metrics
 
     """
+    # init weights for relu
+    init = K.initializers.HeNormal(seed=0)
+
+    # creating convolutional and pooling Layers
+    pool_layer2 = K.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(
+        K.layers.Conv2D(filters=16, kernel_size=(5, 5),
+                        padding='valid', activation='relu',
+                        kernel_initializer=init)(
+            K.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(
+                K.layers.Conv2D(filters=6, kernel_size=(5, 5),
+                                padding='same', activation='relu',
+                                kernel_initializer=init)(X)
+            )
+        )
+    )
+
+    # creating layers
+    output_layer = K.layers.Dense(units=10,
+                                  activation='softmax',
+                                  kernel_initializer=init)(
+        K.layers.Dense(units=84, activation='relu', kernel_initializer=init)(
+            K.layers.Dense(units=120, activation='relu',
+                           kernel_initializer=init)(
+                K.layers.Flatten()(pool_layer2)
+            )
+        )
+    )
+
+    # creating and compiling the model
+    model = K.Model(inputs=X, outputs=output_layer)
+    model.compile(optimizer='adam',
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy'])
+
+    # returns the K model
+    return (model)
