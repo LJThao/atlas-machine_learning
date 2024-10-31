@@ -96,7 +96,8 @@ def lenet5(x, y):
         tf.cast(
             tf.equal(tf.argmax(y, axis=1),
                      tf.argmax(output_layer, axis=1)),
-                     tf.float32)
+                     tf.float32
+        )
     )
 
     # returns the output, training op utilizing adam op, and loss and accuracy
