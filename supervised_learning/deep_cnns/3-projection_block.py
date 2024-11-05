@@ -33,17 +33,23 @@ def projection_block(A_prev, filters, s=2):
     init = K.initializers.HeNormal(seed=0)
 
     # main path(m_p) towards the sequence of layers to create new features
-    m_p = K.layers.Conv2D(F11, 1, strides=s,
+    m_p = K.layers.Conv2D(F11, 1,
+                          strides=s,
                           padding='same',
-                          kernel_initializer=init)(A_prev)
+                          kernel_initializer=init
+                          )(A_prev)
     m_p = K.layers.BatchNormalization()(m_p)
     m_p = K.layers.Activation('relu')(m_p)
-    m_p = K.layers.Conv2D(F3, 3, padding='same',
-                          kernel_initializer=init)(m_p)
+    m_p = K.layers.Conv2D(F3, 3,
+                          padding='same',
+                          kernel_initializer=init
+                          )(m_p)
     m_p = K.layers.BatchNormalization()(m_p)
     m_p = K.layers.Activation('relu')(m_p)
-    m_p = K.layers.Conv2D(F12, 1, padding='same',
-                          kernel_initializer=init)(m_p)
+    m_p = K.layers.Conv2D(F12, 1,
+                          padding='same',
+                          kernel_initializer=init
+                          )(m_p)
     m_p = K.layers.BatchNormalization()(m_p)
 
     # shortcut path(s_p) 1x1 to match dimensions
