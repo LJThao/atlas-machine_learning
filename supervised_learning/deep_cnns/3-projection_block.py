@@ -47,9 +47,11 @@ def projection_block(A_prev, filters, s=2):
     m_p = K.layers.BatchNormalization()(m_p)
 
     # shortcut path(s_p) 1x1 to match dimensions
-    s_p = K.layers.Conv2D(F12, 1, strides=s,
-                               padding='same',
-                               kernel_initializer=init)(A_prev)
+    s_p = K.layers.Conv2D(F12, 1,
+                          strides=s,
+                          padding='same',
+                          kernel_initializer=init
+                          )(A_prev)
     shortcut = K.layers.BatchNormalization()(s_p)
 
     # applying the shortcut to main and apply relu activation
