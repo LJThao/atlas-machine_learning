@@ -53,5 +53,5 @@ def identity_block(A_prev, filters):
     add_output = K.layers.Add()([x3, A_prev])
     id_output = K.layers.Activation('relu')(add_output)
 
-    # returns the activated output of the identity block    
+    # returns the activated output of the identity block
     return (id_output)
