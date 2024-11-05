@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Transition Layer"""
+"""Transition Layer Module"""
 from tensorflow import keras as K
 
 
