@@ -25,20 +25,21 @@ def inception_network():
     x = K.layers.Conv2D(192, (3, 3), padding='same', activation='relu')(x)
     x = K.layers.MaxPooling2D(3, strides=2, padding='same')(x)
 
-    # incept block filter tuples as (F1, F3R, F3. F5R, F5, FPP)
-    filters = [
-        (64, 96, 128, 16, 32, 32), (128, 128, 192, 32, 96, 64),
-        (192, 96, 208, 16, 48, 64), (160, 112, 224, 24, 64, 64),
-        (128, 128, 256, 24, 64, 64), (112, 144, 288, 32, 64, 64),
-        (256, 160, 320, 32, 128, 128), (256, 160, 320, 32, 128, 128),
-        (384, 192, 384, 48, 128, 128)
-    ]
+    # incept layers
+    incept_3a = inception_block(x, [64, 96, 128, 16, 32, 32])
+    incept_3b = inception_block(incept_3a, [128, 128, 192, 32, 96, 64])
+    x = K.layers.MaxPooling2D((3, 3), strides=2, padding='same')(incept_3b)
 
-    # apply incept blocks and adding the pooling layers
-    for i, f in enumerate(filters):
-        x = inception_block(x, f)
-        if i == 1 or i == 6:
-            x = K.layers.MaxPooling2D(3, strides=2, padding='same')(x)
+    incept_4a = inception_block(x, [192, 96, 208, 16, 48, 64])
+    incept_4b = inception_block(incept_4a, [160, 112, 224, 24, 64, 64])
+    incept_4c = inception_block(incept_4b, [128, 128, 256, 24, 64, 64])
+    incept_4d = inception_block(incept_4c, [112, 144, 288, 32, 64, 64])
+    incept_4e = inception_block(incept_4d, [256, 160, 320, 32, 128, 128])
+    x = K.layers.MaxPooling2D((3, 3), strides=2, padding='same')(incept_4e)
+
+    incept_5a = inception_block(x, [256, 160, 320, 32, 128, 128])
+    incept_5b = inception_block(incept_5a, [384, 192, 384, 48, 128, 128])
+    x = K.layers.AvgPool2D((7, 7), strides=1)(incept_5b)
 
     # set x to the finished layers
     x = K.layers.GlobalAveragePooling2D()(x)
