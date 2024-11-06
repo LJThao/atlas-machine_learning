@@ -37,7 +37,7 @@ def dense_block(X, nb_filters, growth_rate, layers):
         # 3x3 convolution
         conv_out = K.layers.BatchNormalization()(bl)
         conv_out = K.layers.Activation('relu')(conv_out)
-        cont_out = K.layers.Conv2D(growth_rate, (3, 3),
+        conv_out = K.layers.Conv2D(growth_rate, (3, 3),
                                    padding='same',
                                    kernel_initializer=init
                                    )(conv_out)
