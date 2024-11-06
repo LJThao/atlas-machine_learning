@@ -70,5 +70,5 @@ def resnet50():
     # create the model
     keras_model = K.Model(inputs=input, outputs=output)
 
-    # returns the keras model 
+    # returns the keras model
     return (keras_model)
