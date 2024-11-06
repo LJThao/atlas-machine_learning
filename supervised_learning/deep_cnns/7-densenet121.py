@@ -24,12 +24,12 @@ def densenet121(growth_rate=32, compression=1.0):
     input = K.Input(shape=(224, 224, 3))
 
     # init conv to pooling
+    x = K.layers.BatchNormalization()(input)
     x = K.layers.Conv2D(64, 7,
                         strides=2,
                         padding='same',
                         kernel_initializer=init
-                        )(input)
-    x = K.layers.BatchNormalization()(x)
+                        )(x)
     x = K.layers.Activation('relu')(x)
     x = K.layers.MaxPooling2D(3, strides=2, padding='same')(x)
 
@@ -38,13 +38,16 @@ def densenet121(growth_rate=32, compression=1.0):
     for layers in num_layers[:-1]:
         x, filters = dense_block(x, filters, growth_rate, layers)
         x, filters = transition_layer(x, filters, compression)
-    x, _ = dense_block(x, filters, growth_rate, num_layers[-1])
+    x, filters = dense_block(x, filters, growth_rate, num_layers[-1])
 
     # perform the final process for layers
+    x = K.layers.BatchNormalization()(x)
+    x = K.layers.Activation('relu')(x)
+    x = K.layers.GlobalAveragePooling2D()(x)
     outputs = K.layers.Dense(1000,
                              activation='softmax',
                              kernel_initializer=init
-                             )(K.layers.GlobalAveragePooling2D()(x))
+                             )(x)
     keras_model = K.Model(input, outputs)
 
     # return the keras model
