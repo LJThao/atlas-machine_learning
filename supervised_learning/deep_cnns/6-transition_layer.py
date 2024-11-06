@@ -33,7 +33,7 @@ def transition_layer(X, nb_filters, compression):
                                 kernel_initializer=init
                                 )(trans_out)
     trans_out = K.layers.AveragePooling2D(pool_size=(2, 2),
-                                          strides=2, 
+                                          strides=2,
                                           padding='same'
                                           )(trans_out)
 
