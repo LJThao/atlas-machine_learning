@@ -23,13 +23,10 @@ def resnet50():
     input = K.Input(shape=(224, 224, 3))
 
     # init conv and pooling
-    layer_output = K.layers.Conv2D(64, (7, 7),
-                                   strides=2, padding='same',
-                                   kernel_initializer=init)(input)
+    layer_output = K.layers.Conv2D(64, (7, 7), strides=2, padding='same', kernel_initializer=init)(input)
     layer_output = K.layers.BatchNormalization(axis=3)(layer_output)
     layer_output = K.layers.Activation('relu')(layer_output)
-    layer_output = K.layers.MaxPooling2D((3, 3), strides=2,
-                                         padding='same')(layer_output)
+    layer_output = K.layers.MaxPooling2D((3, 3), strides=2, padding='same')(layer_output)
 
     # the ResNet stages == conv2_x
     layer_output = projection_block(layer_output, [64, 64, 256])
