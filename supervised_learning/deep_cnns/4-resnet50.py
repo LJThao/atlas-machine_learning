@@ -20,40 +20,48 @@ def resnet50():
     """
     # init the HeNormal and input for shape
     init = K.initializers.HeNormal(seed=0)
-    inputs = K.Input(shape=(224, 224, 3))
+    input = K.Input(shape=(224, 224, 3))
 
     # init conv and pooling
-    layer_output = K.layers.Conv2D(64, 7,
-                                   strides=2,
-                                   padding='same',
-                                   kernel_initializer=init
-                                   )(inputs)
+    layer_output = K.layers.Conv2D(64, (7, 7),
+                                   strides=2, padding='same',
+                                   kernel_initializer=init)(input)
     layer_output = K.layers.BatchNormalization(axis=3)(layer_output)
     layer_output = K.layers.Activation('relu')(layer_output)
-    layer_output = K.layers.MaxPooling2D(3,
-                                         strides=2,
-                                         padding='same'
-                                         )(layer_output)
+    layer_output = K.layers.MaxPooling2D((3, 3), strides=2,
+                                         padding='same')(layer_output)
 
-    # the ResNet Stages
-    stages = [
-        ([64, 64, 256], 3, 1),
-        ([128, 128, 512], 4, 2),
-        ([256, 256, 1024], 6, 2),
-        ([512, 512, 2048], 3, 2)
-    ]
-    # iterate over the stages
-    for filters, blocks, stride in stages:
-        layer_output = projection_block(layer_output, filters, s=stride)
-        for _ in range(1, blocks):
-            layer_output = identity_block(layer_output, filters)
+    # the ResNet stages == conv2_x
+    layer_output = projection_block(layer_output, [64, 64, 256])
+    layer_output = identity_block(layer_output, [64, 64, 256])
+    layer_output = identity_block(layer_output, [64, 64, 256])
 
-    # average the pooling and connect the layer
+    # conv3_x
+    layer_output = projection_block(layer_output, [128, 128, 512], s=2)
+    layer_output = identity_block(layer_output, [128, 128, 512])
+    layer_output = identity_block(layer_output, [128, 128, 512])
+    layer_output = identity_block(layer_output, [128, 128, 512])
+
+    # conv4_x
+    layer_output = projection_block(layer_output, [256, 256, 1024], s=2)
+    layer_output = identity_block(layer_output, [256, 256, 1024])
+    layer_output = identity_block(layer_output, [256, 256, 1024])
+    layer_output = identity_block(layer_output, [256, 256, 1024])
+    layer_output = identity_block(layer_output, [256, 256, 1024])
+    layer_output = identity_block(layer_output, [256, 256, 1024])
+
+    # conv5_x
+    layer_output = projection_block(layer_output, [512, 512, 2048], s=2)
+    layer_output = identity_block(layer_output, [512, 512, 2048])
+    layer_output = identity_block(layer_output, [512, 512, 2048])
+
+    # average the pooling and and connect the layer
     layer_output = K.layers.GlobalAveragePooling2D()(layer_output)
-    outputs = K.layers.Dense(1000,
-                            activation='softmax',
+    output = K.layers.Dense(1000, activation='softmax',
                             kernel_initializer=init)(layer_output)
-    model = K.Model(inputs=inputs, outputs=outputs)
+
+    # create the model
+    keras_model = K.Model(inputs=input, outputs=output)
 
     # returns the keras model 
-    return model
+    return (keras_model)
