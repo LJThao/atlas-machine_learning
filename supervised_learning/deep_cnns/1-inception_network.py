@@ -45,7 +45,7 @@ def inception_network():
     incept_5b = inception_block(incept_5a, [384, 192, 384, 48, 128, 128])
 
     # set x to the finished layers
-    x = K.layers.GlobalAveragePooling2D()(incept_5b)
+    x = K.layers.AveragePooling2D(pool_size=(7, 7))(incept_5b)
     x = K.layers.Dropout(0.4)(x)
     output = K.layers.Dense(1000, activation='softmax')(x)
 
