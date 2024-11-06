@@ -20,14 +20,14 @@ def resnet50():
     """
     # init the HeNormal and input for shape
     init = K.initializers.HeNormal(seed=0)
-    input = K.Input(shape=(224, 224, 3))
+    inputs = K.Input(shape=(224, 224, 3))
 
     # init conv and pooling
     layer_output = K.layers.Conv2D(64, 7,
                                    strides=2,
                                    padding='same',
                                    kernel_initializer=init
-                                   )(input)
+                                   )(inputs)
     layer_output = K.layers.BatchNormalization()(layer_output)
     layer_output = K.layers.Activation('relu')(layer_output)
     layer_output = K.layers.MaxPooling2D(3,
@@ -50,9 +50,8 @@ def resnet50():
     layer_output = K.layers.GlobalAveragePooling2D()(layer_output)
     output = K.layers.Dense(1000,
                             activation='softmax',
-                            kernel_initializer=init
-                            )(layer_output)
-    keras_model = K.Model(input, output)
+                            kernel_initializer=init)(layer_output)
+    model = K.Model(inputs, output)
 
     # returns the keras model 
-    return (keras_model)
+    return (model)
