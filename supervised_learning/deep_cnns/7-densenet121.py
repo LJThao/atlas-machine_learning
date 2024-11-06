@@ -24,14 +24,14 @@ def densenet121(growth_rate=32, compression=1.0):
     input = K.Input(shape=(224, 224, 3))
 
     # init conv to pooling
-    x = K.layers.BatchNormalization()(input)
+    x = K.layers.BatchNormalization(axis=3)(input)
+    x = K.layers.Activation('relu')(x)
     x = K.layers.Conv2D(64, 7,
                         strides=2,
                         padding='same',
                         kernel_initializer=init
                         )(x)
-    x = K.layers.Activation('relu')(x)
-    x = K.layers.MaxPooling2D(3, strides=2, padding='same')(x)
+    x = K.layers.MaxPooling2D(pool_size=3, strides=2, padding='same')(x)
 
     # set filters and layer then dense block and transition
     filters, num_layers = 64, [6, 12, 24, 16]
@@ -41,8 +41,6 @@ def densenet121(growth_rate=32, compression=1.0):
     x, filters = dense_block(x, filters, growth_rate, num_layers[-1])
 
     # perform the final process for layers
-    x = K.layers.BatchNormalization()(x)
-    x = K.layers.Activation('relu')(x)
     x = K.layers.GlobalAveragePooling2D()(x)
     outputs = K.layers.Dense(1000,
                              activation='softmax',
