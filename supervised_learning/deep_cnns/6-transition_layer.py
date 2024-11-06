@@ -24,15 +24,18 @@ def transition_layer(X, nb_filters, compression):
     filters = int(nb_filters * compression)
     input = X
 
-    # set x to batch norm, relu, 1x1 conv, and 2x2 avg pooling
+    # set output to batch norm, relu, 1x1 conv, and 2x2 avg pooling
     trans_out = K.layers.BatchNormalization()(input)
     trans_out = K.layers.Activation('relu')(trans_out)
-    trans_out = K.layers.Conv2D(filters, (1, 1), padding='same',
-                        kernel_initializer=init
-                        )(trans_out)
+    trans_out = K.layers.Conv2D(filters,
+                                (1, 1),
+                                padding='same',
+                                kernel_initializer=init
+                                )(trans_out)
     trans_out = K.layers.AveragePooling2D(pool_size=(2, 2),
-                                  strides=2, padding='same'
-                                  )(trans_out)
+                                          strides=2, 
+                                          padding='same'
+                                          )(trans_out)
 
     # returns the output of the transition layer, and filters
     return (trans_out, filters)
