@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Yolo Module"""
+"""Yolo Module - Based on 0-yolo.py"""
 import tensorflow.keras as K
 
 
