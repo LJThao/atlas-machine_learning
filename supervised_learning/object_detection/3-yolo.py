@@ -161,3 +161,61 @@ class Yolo:
         box_scores = np.concatenate(box_scores, axis=0)
 
         return (filtered_boxes, box_classes, box_scores)
+    
+    def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
+        """
+
+        filtered_boxes: a numpy.ndarray of shape (?, 4) containing all of
+        the filtered bounding boxes:
+        box_classes: a numpy.ndarray of shape (?,) containing the class number
+        for the class that filtered_boxes predicts, respectively
+        box_scores: a numpy.ndarray of shape (?) containing the box scores for
+        each box in filtered_boxes, respectively
+        Returns a tuple of (box_predictions, predicted_box_classes,
+        predicted_box_scores):
+        box_predictions: a numpy.ndarray of shape (?, 4) containing all of the
+        predicted bounding boxes ordered by class and box score
+        predicted_box_classes: a numpy.ndarray of shape (?,) containing the
+        class number for box_predictions ordered by class and box score,
+        respectively
+        predicted_box_scores: a numpy.ndarray of shape (?) containing the box
+        scores for box_predictions ordered by class and box score, respectively
+
+        """
+        box_predictions = []
+        predicted_box_classes = []
+        predicted_box_scores = []
+
+        for class_id in np.unique(box_classes):
+            mask = box_classes == class_id
+            boxes = filtered_boxes[mask]
+            scores = box_scores[mask]
+            indices = np.argsort(scores)[::-1]
+            keep = []
+
+            while indices.size > 0:
+                i = indices[0]
+                keep.append(i)
+                x1, y1, x2, y2 = boxes[i]
+                x1_2, y1_2, x2_2, y2_2 = boxes[indices[1:]].T
+                inter_x1 = np.maximum(x1, x1_2)
+                inter_y1 = np.maximum(y1, y1_2)
+                inter_x2 = np.minimum(x2, x2_2)
+                inter_y2 = np.minimum(y2, y2_2)
+                inter_area = np.maximum(0, inter_x2 - inter_x1) * np.maximum(
+                    0, inter_y2 - inter_y1)
+                area1 = (x2 - x1) * (y2 - y1)
+                area2 = (x2_2 - x1_2) * (y2_2 - y1_2)
+                iou = inter_area / (area1 + area2 - inter_area)
+                indices = indices[1:][iou <= self.nms_t]
+
+            box_predictions.append(boxes[keep])
+            predicted_box_classes.append(np.full_like(scores[keep], class_id))
+            predicted_box_scores.append(scores[keep])
+
+        box_predictions = np.concatenate(box_predictions)
+        predicted_box_classes = np.concatenate(predicted_box_classes)
+        predicted_box_scores = np.concatenate(predicted_box_scores)
+        order = np.argsort(predicted_box_scores)[::-1]
+
+        return (box_predictions[order], predicted_box_classes[order], predicted_box_scores[order])
