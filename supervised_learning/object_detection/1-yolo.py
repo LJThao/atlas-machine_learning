@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Yolo Module - Based on 0-yolo.py"""
 import tensorflow.keras as K
+import numpy as np
 
 
 class Yolo:
@@ -42,3 +43,82 @@ class Yolo:
         self.class_t = class_t
         self.nms_t = nms_t
         self.anchors = anchors
+
+    def process_outputs(self, outputs, image_size):
+        """
+
+        outputs is a list of numpy.ndarrays containing
+        the predictions from the Darknet model for a single image:
+        Each output will have the shape (grid_height, grid_width, anchor_boxes, 
+        4 + 1 + classes)
+        grid_height & grid_width => the height and width of the grid used for
+        the output
+        anchor_boxes => the number of anchor boxes used
+        4 => (t_x, t_y, t_w, t_h)
+        1 => box_confidence
+        classes => class probabilities for all classes
+        image_size is a numpy.ndarray containing the image's original size
+        [image_height, image_width]
+
+        Returns a tuple of (boxes, box_confidences, box_class_probs):
+        boxes: a list of numpy.ndarrays of shape (grid_height, grid_width, anchor_boxes,
+        4) containing the processed boundary boxes for each output, respectively:
+        4 => (x1, y1, x2, y2)
+        (x1, y1, x2, y2) should represent the boundary box relative to original image
+        box_confidences: a list of numpy.ndarrays of shape (grid_height, grid_width,
+        anchor_boxes, 1) containing the box confidences for each output, respectively
+        box_class_probs: a list of numpy.ndarrays of shape (grid_height, grid_width,
+        anchor_boxes, classes) containing the box's class probabilities for each output, respectively
+
+        """
+        boxes, box_confidences, box_class_probs = [], [], []
+
+        for i, output in enumerate(outputs):
+            # retrieving the dimensions
+            grid_height, grid_width = output.shape[:2]
+            anchor_boxes = self.anchors[i].shape[0]
+
+            # splitting the outputs
+            txy = output[..., :2]
+            twh = output[..., 2:4]
+            box_conf = output[..., 4:5]
+            class_probs = output[..., 5:]
+
+            # applying sigmoid
+            box_conf = self.sigmoid(box_conf)
+            class_probs = self.sigmoid(class_probs)
+
+            # expanding the dimensions
+            box_conf = np.expand_dims(box_conf, axis=-1)
+
+            box_confidences.append(box_conf)
+            box_class_probs.append(class_probs)
+
+            # reshape the anchors
+            anchors = np.reshape(self.anchors[i], (1, 1, anchor_boxes, 2))
+
+            # calculate the width and height of the boxes
+            box_wh = anchors * np.exp(twh)
+            box_wh /= [self.model.input[0].shape[1], self.model.input[0].shape[2]]
+
+            # create the grid of (x, y) coordinates
+            grid = np.indices((grid_height, grid_width)).T.reshape(grid_height, grid_width, 1, 2)
+            grid = np.tile(grid, (1, 1, anchor_boxes, 1))
+
+            box_xy = (self.sigmoid(txy) + grid) / [grid_width, grid_height]
+
+            box_xy1 = box_xy - (box_wh / 2)
+            box_xy2 = box_xy + (box_wh / 2)
+
+            box = np.concatenate((box_xy1, box_xy2), axis=-1)
+
+            box *= np.tile(image_size, 2)
+
+            boxes.append(box)
+
+        # returns a tuple of each
+        return (boxes, box_confidences, box_class_probs)
+
+    def sigmoid(self, x):
+        """Sigmoid activation function"""
+        return 1 / (1 + np.exp(-x))
