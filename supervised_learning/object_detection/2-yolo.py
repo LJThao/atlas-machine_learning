@@ -140,4 +140,24 @@ class Yolo:
         each box in filtered_boxes, respectively
 
         """
-        
+        filtered_boxes = []
+        box_classes = []
+        box_scores = []
+
+        for i in range(len(boxes)):
+            box_confidence = box_confidences[i].squeeze(axis=-1)
+            box_class_prob = box_class_probs[i]
+            box_score = box_confidence * box_class_prob
+            box_class = np.argmax(box_score, axis=-1)
+            box_score = np.max(box_score, axis=-1)
+            mask = box_score >= self.class_t
+
+            filtered_boxes.append(boxes[i][mask])
+            box_classes.append(box_class[mask])
+            box_scores.append(box_score[mask])
+
+        filtered_boxes = np.concatenate(filtered_boxes, axis=0)
+        box_classes = np.concatenate(box_classes, axis=0)
+        box_scores = np.concatenate(box_scores, axis=0)
+
+        return (filtered_boxes, box_classes, box_scores)
