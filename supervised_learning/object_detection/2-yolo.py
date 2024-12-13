@@ -118,7 +118,7 @@ class Yolo:
 
         # returns a tuple of each
         return (boxes, box_confidences, box_class_probs)
-    
+
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         """
 
