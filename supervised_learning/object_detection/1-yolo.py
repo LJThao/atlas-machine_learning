@@ -44,6 +44,10 @@ class Yolo:
         self.nms_t = nms_t
         self.anchors = anchors
 
+    def sigmoid(self, x):
+        """Sigmoid activation function"""
+        return 1 / (1 + np.exp(-x))
+
     def process_outputs(self, outputs, image_size):
         """
 
@@ -88,20 +92,13 @@ class Yolo:
             box_conf = self.sigmoid(box_conf)
             class_probs = self.sigmoid(class_probs)
 
-            # expanding the dimensions
-            box_conf = np.expand_dims(box_conf, axis=-1)
-
-            box_confidences.append(box_conf)
+            box_confidences.append(np.expand_dims(box_conf, axis=-1))
             box_class_probs.append(class_probs)
 
-            # reshape the anchors
             anchors = np.reshape(self.anchors[i], (1, 1, anchor_boxes, 2))
-
-            # calculate the width and height of the boxes
             box_wh = anchors * np.exp(twh)
-            box_wh /= [self.model.input[0].shape[1], self.model.input[0].shape[2]]
+            box_wh /= np.array([self.model.input[0].shape[1], self.model.input[0].shape[2]])
 
-            # create the grid of (x, y) coordinates
             grid = np.indices((grid_height, grid_width)).T.reshape(grid_height, grid_width, 1, 2)
             grid = np.tile(grid, (1, 1, anchor_boxes, 1))
 
@@ -109,7 +106,6 @@ class Yolo:
 
             box_xy1 = box_xy - (box_wh / 2)
             box_xy2 = box_xy + (box_wh / 2)
-
             box = np.concatenate((box_xy1, box_xy2), axis=-1)
 
             box *= np.tile(image_size, 2)
@@ -118,7 +114,3 @@ class Yolo:
 
         # returns a tuple of each
         return (boxes, box_confidences, box_class_probs)
-
-    def sigmoid(self, x):
-        """Sigmoid activation function"""
-        return 1 / (1 + np.exp(-x))
