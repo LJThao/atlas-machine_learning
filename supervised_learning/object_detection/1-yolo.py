@@ -78,34 +78,29 @@ class Yolo:
         boxes, box_confidences, box_class_probs = [], [], []
 
         for i, output in enumerate(outputs):
-            # retrieving the dimensions
-            grid_height, grid_width = output.shape[:2]
+            grid_height, grid_weight = output.shape[:2]
             anchor_boxes = self.anchors[i].shape[0]
 
-            # splitting the outputs
             txy = output[..., :2]
             twh = output[..., 2:4]
-            box_conf = output[..., 4:5]
-            class_probs = output[..., 5:]
 
-            # applying sigmoid
-            box_conf = self.sigmoid(box_conf)
-            class_probs = self.sigmoid(class_probs)
+            conf_sigmoid = self.sigmoid(output[..., 4:5])
+            prob_sigmoid = self.sigmoid(output[..., 5:])
 
-            box_confidences.append(np.expand_dims(box_conf, axis=-1))
-            box_class_probs.append(class_probs)
+            conf_box = np.expand_dims(conf_sigmoid, axis=-1)
 
-            anchors = np.reshape(self.anchors[i], (1, 1, anchor_boxes, 2))
-            box_wh = anchors * np.exp(twh)
-            box_wh /= np.array([self.model.input[0].shape[1], self.model.input[0].shape[2]])
+            box_confidences.append(conf_box)
+            box_class_probs.append(prob_sigmoid)
 
-            grid = np.indices((grid_height, grid_width)).T.reshape(grid_height, grid_width, 1, 2)
-            grid = np.tile(grid, (1, 1, anchor_boxes, 1))
+            box_wh = self.anchors[i] * np.exp(twh)
+            box_wh /= [grid_weight, grid_height]
 
-            box_xy = (self.sigmoid(txy) + grid) / [grid_width, grid_height]
+            grid = np.tile(np.indices((grid_weight, grid_height)).T, anchor_boxes).reshape(grid_height, grid_weight, -1, 2)
 
+            box_xy = (self.sigmoid(txy) + grid) / [grid_weight, grid_height]
             box_xy1 = box_xy - (box_wh / 2)
             box_xy2 = box_xy + (box_wh / 2)
+
             box = np.concatenate((box_xy1, box_xy2), axis=-1)
 
             box *= np.tile(image_size, 2)
