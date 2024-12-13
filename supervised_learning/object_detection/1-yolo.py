@@ -93,7 +93,11 @@ class Yolo:
             box_wh = anchors * np.exp(twh)
             box_wh /= [grid_width, grid_height]
 
-            grid = np.indices((grid_width, grid_height)).T.reshape(grid_height, grid_width, 1, 2)
+            grid = np.indices((grid_width, grid_height)).T.reshape(
+                grid_height,
+                grid_width,
+                1, 2)
+
             grid = np.tile(grid, (1, 1, anchors.shape[0], 1))
 
             box_xy = (self.sigmoid(txy) + grid) / [grid_width, grid_height]
