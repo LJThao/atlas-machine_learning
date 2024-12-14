@@ -291,8 +291,8 @@ class Yolo:
         2 => (image_height, image_width)
 
         """
-        input_w = 416
-        input_h = 416
+        input_w = self.model.input.shape[1]
+        input_h = self.model.input.shape[2]
 
         image_shapes = [image.shape[:2] for image in images]
         pimages = []
@@ -306,4 +306,5 @@ class Yolo:
 
         pimages = np.array(pimages)
         image_shapes = np.array(image_shapes)
+
         return (pimages, image_shapes)
