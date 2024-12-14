@@ -309,4 +309,34 @@ class Yolo:
 
         return (pimages, image_shapes)
     
-    
+    def show_boxes(self, image, boxes, box_classes, box_scores, file_name):
+        """
+
+        image: a numpy.ndarray containing an unprocessed image
+        boxes: a numpy.ndarray containing the boundary boxes for the image
+        box_classes: a numpy.ndarray containing the class indices for each box
+        box_scores: a numpy.ndarray containing the box scores for each box
+        file_name: the file path where the original image is stored
+
+        """
+        for box, box_class_idx, box_score in zip(boxes,
+                                                 box_classes,
+                                                 box_scores):
+            x1, y1, x2, y2 = map(int, box)
+            label = f"{self.class_names[box_class_idx]} {box_score:.2f}"
+
+            cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+            cv2.putText(image,
+                        label,
+                        (x1, y1 - 5),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5,
+                        (0, 0, 255),
+                        1)
+
+        cv2.imshow(file_name, image)
+        if cv2.waitKey(0) & 0xFF == ord('s'):
+            os.makedirs('./detections/', exist_ok=True)
+            cv2.imwrite(f'./detections/{file_name}', image)
+
+        cv2.destroyAllWindows()
