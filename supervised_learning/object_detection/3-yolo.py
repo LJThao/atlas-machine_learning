@@ -202,8 +202,7 @@ class Yolo:
                 inter_y1 = np.maximum(y1, y1_2)
                 inter_x2 = np.minimum(x2, x2_2)
                 inter_y2 = np.minimum(y2, y2_2)
-                inter_area = np.maximum(0, inter_x2 - inter_x1) * np.maximum(
-                    0, inter_y2 - inter_y1)
+                inter_area = np.maximum(0, inter_x2 - inter_x1) * np.maximum(0, inter_y2 - inter_y1)
                 area1 = (x2 - x1) * (y2 - y1)
                 area2 = (x2_2 - x1_2) * (y2_2 - y1_2)
                 iou = inter_area / (area1 + area2 - inter_area)
