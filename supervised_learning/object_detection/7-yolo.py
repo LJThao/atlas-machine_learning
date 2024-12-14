@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Yolo Module - Based on 0-yolo.py"""
+"""Yolo Module - Based on 6-yolo.py"""
 import tensorflow.keras as K
 import numpy as np
 import cv2
