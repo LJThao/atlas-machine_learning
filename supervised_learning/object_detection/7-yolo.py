@@ -341,3 +341,29 @@ class Yolo:
 
         cv2.destroyAllWindows()
 
+    def predict(self, folder_path):
+        """
+
+        folder_path: a string representing the path to the folder holding all the images to predict
+        All image windows should be named after the corresponding image filename without its full path(see examples below)
+        Displays all images using the show_boxes method
+        Returns: a tuple of (predictions, image_paths):
+        predictions: a list of tuples for each image of (boxes, box_classes, box_scores)
+        image_paths: a list of image paths corresponding to each prediction in predictions
+
+        """
+        predictions = []
+        image_paths = []
+        for filename in os.listdir(folder_path):
+            file_path = os.path.join(folder_path, filename)
+            if file_path.lower().endswith(('.png', '.jpg', '.jpeg')):
+                image = cv2.imread(file_path)
+                boxes, box_classes, box_scores = self.model.predict(image)
+                predictions.append((boxes, box_classes, box_scores))
+                image_paths.append(file_path)
+                wo_path = os.path.basename(file_path)
+                self.show_boxes(image, boxes,
+                                box_classes, box_scores,
+                                wo_path)
+
+        return (predictions, image_paths)
