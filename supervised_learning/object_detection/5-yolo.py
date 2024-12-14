@@ -271,3 +271,31 @@ class Yolo:
 
         return (images, image_paths)
 
+    def preprocess_images(self, images):
+        """
+
+        images: a list of images as numpy.ndarrays
+        Resize the images with inter-cubic interpolation
+        Rescale all images to have pixel values in the range [0, 1]
+        Returns a tuple of (pimages, image_shapes):
+        pimages: a numpy.ndarray of shape (ni, input_h, input_w, 3) containing
+        all of the preprocessed images
+        ni: the number of images that were preprocessed
+        input_h: the input height for the Darknet model Note: this can vary by
+        model
+        input_w: the input width for the Darknet model Note: this can vary by
+        model
+        3: number of color channels
+        image_shapes: a numpy.ndarray of shape (ni, 2) containing the original
+        height and width of the images
+        2 => (image_height, image_width)
+
+        """
+        input_w = 416
+        input_h = 416
+
+        resized_images = [cv2.resize(img, (input_w, input_h)) for img in images]
+        pimages = np.array(resized_images) / 255.0
+        image_shapes = np.array([img.shape[:2] for img in images])
+
+        return (pimages, image_shapes)
