@@ -294,8 +294,10 @@ class Yolo:
         input_w = 416
         input_h = 416
 
-        resized_images = [cv2.resize(img, (input_w, input_h)) for img in images]
-        pimages = np.array(resized_images) / 255.0
-        image_shapes = np.array([img.shape[:2] for img in images])
+        image_shapes = [image.shape[:2] for image in images]
+        pimages = [cv2.resize(image,
+                              (input_w, input_h),
+                              interpolation=cv2.INTER_CUBIC
+                              ) / 255.0 for image in images]
 
-        return (pimages, image_shapes)
+        return np.array(pimages), np.array(image_shapes)
