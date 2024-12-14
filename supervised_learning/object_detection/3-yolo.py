@@ -186,35 +186,63 @@ class Yolo:
         predicted_box_classes = []
         predicted_box_scores = []
 
-        for class_id in np.unique(box_classes):
-            mask = box_classes == class_id
-            boxes = filtered_boxes[mask]
-            scores = box_scores[mask]
-            indices = np.argsort(scores)[::-1]
-            keep = []
+        for c in set(box_classes):
+            idx = np.where(box_classes == c)
 
-            while indices.size > 0:
-                i = indices[0]
-                keep.append(i)
-                x1, y1, x2, y2 = boxes[i]
-                x1_2, y1_2, x2_2, y2_2 = boxes[indices[1:]].T
-                inter_x1 = np.maximum(x1, x1_2)
-                inter_y1 = np.maximum(y1, y1_2)
-                inter_x2 = np.minimum(x2, x2_2)
-                inter_y2 = np.minimum(y2, y2_2)
-                inter_area = np.maximum(0, inter_x2 - inter_x1) * np.maximum(0, inter_y2 - inter_y1)
-                area1 = (x2 - x1) * (y2 - y1)
-                area2 = (x2_2 - x1_2) * (y2_2 - y1_2)
-                iou = inter_area / (area1 + area2 - inter_area)
-                indices = indices[1:][iou <= self.nms_t]
+            filtered_boxes_c = filtered_boxes[idx]
+            box_scores_c = box_scores[idx]
+            box_classes_c = box_classes[idx]
 
-            box_predictions.append(boxes[keep])
-            predicted_box_classes.append(np.full_like(scores[keep], class_id))
-            predicted_box_scores.append(scores[keep])
+            pick = self._nms(filtered_boxes_c, box_scores_c)
 
-        box_predictions = np.concatenate(box_predictions)
-        predicted_box_classes = np.concatenate(predicted_box_classes)
-        predicted_box_scores = np.concatenate(predicted_box_scores)
-        order = np.argsort(predicted_box_scores)[::-1]
+            box_predictions.append(filtered_boxes_c[pick])
+            predicted_box_classes.append(box_classes_c[pick])
+            predicted_box_scores.append(box_scores_c[pick])
 
-        return (box_predictions[order], predicted_box_classes[order], predicted_box_scores[order])
+        box_predictions = np.concatenate(box_predictions, axis=0)
+        predicted_box_classes = np.concatenate(predicted_box_classes, axis=0)
+        predicted_box_scores = np.concatenate(predicted_box_scores, axis=0)
+
+        return (box_predictions, predicted_box_classes, predicted_box_scores)
+
+    def _nms(self, boxes, scores):
+        """
+
+        Non-Maximum Suppression to filter out overlapping boxes.
+
+        """
+        pick = []
+        order = scores.argsort()[::-1]
+
+        while len(order) > 0:
+            i = order[0]
+            pick.append(i)
+            iou = self._iou(boxes[i], boxes[order[1:]])
+            order = order[1:][iou < self.nms_t]
+
+        return (np.array(pick))
+
+    def _iou(self, box1, boxes):
+        """
+
+        Compute Intersection over Union (IoU).
+
+        """
+        x1, y1, x2, y2 = box1
+        x1s, y1s, x2s, y2s = boxes[:, 0], boxes[:, 1], boxes[:, 2], boxes[:,
+                                                                          3]
+
+        inter_x1 = np.maximum(x1, x1s)
+        inter_y1 = np.maximum(y1, y1s)
+        inter_x2 = np.minimum(x2, x2s)
+        inter_y2 = np.minimum(y2, y2s)
+
+        inter_area = np.maximum(0, inter_x2 - inter_x1) * np.maximum(
+            0, inter_y2 - inter_y1)
+
+        area1 = (x2 - x1) * (y2 - y1)
+        area2 = (x2s - x1s) * (y2s - y1s)
+
+        union_area = area1 + area2 - inter_area
+
+        return (inter_area / union_area)
