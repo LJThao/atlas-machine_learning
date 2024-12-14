@@ -161,7 +161,7 @@ class Yolo:
         box_scores = np.concatenate(box_scores, axis=0)
 
         return (filtered_boxes, box_classes, box_scores)
-    
+
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
         """
 
