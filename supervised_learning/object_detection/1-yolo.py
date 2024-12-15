@@ -81,6 +81,7 @@ class Yolo:
 
         """
         boxes, box_confidences, box_class_probs = [], [], []
+        image_height, image_width = image_size
 
         for i, output in enumerate(outputs):
             grid_height, grid_width = output.shape[:2]
@@ -88,33 +89,29 @@ class Yolo:
 
             txy = output[..., :2]
             twh = output[..., 2:4]
-            conf_sigmoid = self.sigmoid(output[..., 4:5])
-            prob_sigmoid = self.sigmoid(output[..., 5:])
+            conf = self.sigmoid(output[..., 4:5])
+            prob = self.sigmoid(output[..., 5:])
 
-            conf_box = np.expand_dims(conf_sigmoid, axis=-1)
-            box_confidences.append(conf_box)
-            box_class_probs.append(prob_sigmoid)
+            box_confidences.append(conf)
+            box_class_probs.append(prob)
 
             box_wh = anchors * np.exp(twh)
-            box_wh /= [grid_width, grid_height]
+            box_wh /= np.array([grid_width, grid_height])
 
-            grid = np.indices((grid_width, grid_height)).T.reshape(
-                grid_height,
-                grid_width,
-                1, 2)
+            grid_x, grid_y = np.meshgrid(np.arange(grid_width), np.arange(grid_height))
+            grid_x = grid_x.reshape((grid_height, grid_width, 1))
+            grid_y = grid_y.reshape((grid_height, grid_width, 1))
+            grid_x = np.tile(grid_x, (1, 1, anchors.shape[0]))
+            grid_y = np.tile(grid_y, (1, 1, anchors.shape[0]))
 
-            grid = np.tile(grid, (1, 1, anchors.shape[0], 1))
-
-            box_xy = (self.sigmoid(txy) + grid) / [grid_width, grid_height]
+            box_xy = (self.sigmoid(txy) + np.stack([grid_x, grid_y], axis=-1)) / np.array([grid_width, grid_height])
 
             box_xy1 = box_xy - (box_wh / 2)
             box_xy2 = box_xy + (box_wh / 2)
-
             box = np.concatenate((box_xy1, box_xy2), axis=-1)
 
             box *= np.tile(image_size, 2)
 
             boxes.append(box)
 
-        # returns a tuple of each
         return (boxes, box_confidences, box_class_probs)
