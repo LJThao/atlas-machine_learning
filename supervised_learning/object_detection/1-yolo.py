@@ -98,19 +98,23 @@ class Yolo:
             box_wh = anchors * np.exp(twh)
             box_wh /= np.array([grid_width, grid_height])
 
-            grid_x, grid_y = np.meshgrid(np.arange(grid_width), np.arange(grid_height))
+            grid_x, grid_y = np.meshgrid(np.arange(grid_width),
+                                         np.arange(grid_height))
             grid_x = grid_x.reshape((grid_height, grid_width, 1))
             grid_y = grid_y.reshape((grid_height, grid_width, 1))
             grid_x = np.tile(grid_x, (1, 1, anchors.shape[0]))
             grid_y = np.tile(grid_y, (1, 1, anchors.shape[0]))
 
-            box_xy = (self.sigmoid(txy) + np.stack([grid_x, grid_y], axis=-1)) / np.array([grid_width, grid_height])
+            grid = np.stack([grid_x, grid_y], axis=-1)
+            box_xy = (self.sigmoid(txy) + grid) / np.array([grid_width,
+                                                            grid_height])
 
             box_xy1 = box_xy - (box_wh / 2)
             box_xy2 = box_xy + (box_wh / 2)
             box = np.concatenate((box_xy1, box_xy2), axis=-1)
 
-            box *= np.array([image_width, image_height, image_width, image_height])
+            box *= np.array([image_width, image_height,
+                             image_width, image_height])
 
             boxes.append(box)
 
