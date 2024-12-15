@@ -344,26 +344,40 @@ class Yolo:
     def predict(self, folder_path):
         """
 
-        folder_path: a string representing the path to the folder holding all the images to predict
-        All image windows should be named after the corresponding image filename without its full path(see examples below)
+        folder_path: a string representing the path to the folder holding all
+        the images to predict
+        All image windows should be named after the corresponding image
+        filename without its full path(see examples below)
         Displays all images using the show_boxes method
         Returns: a tuple of (predictions, image_paths):
-        predictions: a list of tuples for each image of (boxes, box_classes, box_scores)
-        image_paths: a list of image paths corresponding to each prediction in predictions
+        predictions: a list of tuples for each image of (boxes, box_classes,
+        box_scores)
+        image_paths: a list of image paths corresponding to each prediction in
+        predictions
 
         """
+        images, image_paths = self.load_images(folder_path)
+        preprocessed_images, image_shapes = self.preprocess_images(images)
+
+        pre_image = np.stack(preprocessed_images, axis=0)
+        raw_predictions = self.model.predict(pre_image)
+
         predictions = []
-        image_paths = []
-        for filename in os.listdir(folder_path):
-            file_path = os.path.join(folder_path, filename)
-            if file_path.lower().endswith(('.png', '.jpg', '.jpeg')):
-                image = cv2.imread(file_path)
-                boxes, box_classes, box_scores = self.model.predict(image)
-                predictions.append((boxes, box_classes, box_scores))
-                image_paths.append(file_path)
-                wo_path = os.path.basename(file_path)
-                self.show_boxes(image, boxes,
-                                box_classes, box_scores,
-                                wo_path)
+
+        for i, image in enumerate(images):
+            one_raw = [raw_predictions[j][i] for j in range(3)]
+            boxes, confidences, class_probs = self.process_outputs(one_raw,
+                                                                   image_shapes[i])
+            filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes,
+                                                                        confidences,
+                                                                        class_probs)
+            box_preds, class_preds, score_preds = self.non_max_suppression(filtered_boxes,
+                                                                           box_classes,
+                                                                           box_scores)
+
+            self.show_boxes(image, box_preds, class_preds,
+                            score_preds, image_paths[i].split('/')[-1])
+
+            predictions.append((box_preds, class_preds, score_preds))
 
         return (predictions, image_paths)
