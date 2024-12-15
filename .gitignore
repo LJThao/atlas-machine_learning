@@ -57,3 +57,4 @@ yolo.h5
 coco_classes.txt
 yolo
 requirements.txt
+*.jpg
