@@ -16,7 +16,7 @@ def determinant(matrix):
     """
     # handles a 0x0 matrix
     if matrix == [[]]:
-        return 1
+        return (1)
 
     # validating the input is a list of lists
     if (
@@ -44,7 +44,9 @@ def determinant(matrix):
             for column_index in range(size):
                 # generates the minor matrix
                 minor = [
-                    [matrix[row][col] for col in range(size) if col != column_index]
+                    [matrix[row][col]
+                    for col in range(size) if col != column_index
+                    ]
                     for row in range(1, size)
                 ]
                 # addition and subtraction for cofactors
@@ -52,8 +54,8 @@ def determinant(matrix):
                 if column_index % 2 == 0:
                     det_val += cofact
                 else:
-                    det_val-= cofact
-            return det_val
+                    det_val -= cofact
+            return (det_val)
 
     else:
         # raise an error if the input is not valid

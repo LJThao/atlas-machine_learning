@@ -14,7 +14,9 @@ def minor(matrix):
 
     """
     # validating the matrix is a list of lists
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    if not isinstance(matrix, list):
+        raise TypeError("matrix must be a list of lists")
+    if not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
 
     # validating the matrix is square and non-empty
@@ -40,6 +42,7 @@ def minor(matrix):
         minor_matrix.append(row_minors)
 
     return (minor_matrix)
+
 
 def determinant(matrix):
     """Function that calculates the determinant of a matrix
@@ -83,7 +86,9 @@ def determinant(matrix):
             for column_index in range(size):
                 # generates the minor matrix
                 minor = [
-                    [matrix[row][col] for col in range(size) if col != column_index]
+                    [matrix[row][col]
+                    for col in range(size) if col != column_index
+                    ]
                     for row in range(1, size)
                 ]
                 # addition and subtraction for cofactors

@@ -5,20 +5,23 @@
 def cofactor(matrix):
     """
 
-    matrix is a list of lists whose minor matrix should be calculated
+    matrix is a list of lists whose cofactor matrix should be
+    calculated
     If matrix is not a list of lists, raise a TypeError with
     the message matrix must be a list of lists
-    If matrix is not square or is empty, raise a ValueError with
-    the message matrix must be a non-empty square matrix
-    Returns: the minor matrix of matrix
-    
+    If matrix is not square or is empty, raise a ValueError
+    with the message matrix must be a non-empty square matrix
+    Returns: the cofactor matrix of matrix
+
     """
     # calculate minor
     minor_mat = minor(matrix)
 
+    # determine the minor size
     size = len(minor_mat)
     cofactor_matrix = []
 
+    # iterates through the rows
     for row_index in range(size):
         cofactor_row = []
         for col_index in range(size):
@@ -26,7 +29,9 @@ def cofactor(matrix):
             cofactor_row.append(sign * minor_mat[row_index][col_index])
         cofactor_matrix.append(cofactor_row)
 
+    # returns cofactor matrix
     return (cofactor_matrix)
+
 
 def minor(matrix):
     """
@@ -40,7 +45,9 @@ def minor(matrix):
 
     """
     # validating the matrix is a list of lists
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    if not isinstance(matrix, list):
+        raise TypeError("matrix must be a list of lists")
+    if not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
 
     # validating the matrix is square and non-empty
@@ -66,6 +73,7 @@ def minor(matrix):
         minor_matrix.append(row_minors)
 
     return (minor_matrix)
+
 
 def determinant(matrix):
     """Function that calculates the determinant of a matrix
@@ -109,7 +117,9 @@ def determinant(matrix):
             for column_index in range(size):
                 # generates the minor matrix
                 minor = [
-                    [matrix[row][col] for col in range(size) if col != column_index]
+                    [matrix[row][col]
+                    for col in range(size) if col != column_index
+                    ]
                     for row in range(1, size)
                 ]
                 # addition and subtraction for cofactors
