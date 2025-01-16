@@ -4,7 +4,8 @@ import numpy as np
 
 
 def mean_cov(X):
-    """
+    """Function that calculates the mean and covariance of a data
+    set:
 
     X is a numpy.ndarray of shape (n, d) containing the data set:
     n is the number of data points
