@@ -43,10 +43,12 @@ class MultiNormal():
         if not isinstance(x, np.ndarray):
             raise TypeError("x must be a numpy.ndarray")
         if x.shape != self.mean.shape:
-            raise ValueError(f"x must have the shape ({self.mean.shape[0]}, 1)")
+            d_shape = self.mean.shape[0]
+            raise ValueError(f"x must have the shape ({d_shape}, 1)")
 
         d = self.mean.shape[0]
         diff = x - self.mean
-        exp = np.exp(-0.5 * diff.T @ np.linalg.inv(self.cov) @ diff)
+        e = np.exp(-0.5 * diff.T @ np.linalg.inv(self.cov) @ diff)
+        n = ((2 * np.pi) ** (d / 2) * np.linalg.det(self.cov) ** 0.5)
 
-        return float(exp / ((2 * np.pi) ** (d / 2) * np.linalg.det(self.cov) ** 0.5))
+        return float(e / n)
