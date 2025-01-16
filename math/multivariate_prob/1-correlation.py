@@ -22,7 +22,7 @@ def correlation(C):
 
     if C.ndim != 2 or C.shape[0] != C.shape[1]:
         raise ValueError("C must be a 2D square matrix")
-    
+
     # computing the std
     std_dev = np.sqrt(np.diag(C))
 
