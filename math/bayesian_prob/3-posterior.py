@@ -15,4 +15,3 @@ def posterior(x, n, P, Pr):
     Pr is a 1D numpy.ndarray containing the prior beliefs of P
 
     """
-    

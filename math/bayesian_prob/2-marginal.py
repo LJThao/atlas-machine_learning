@@ -14,4 +14,3 @@ def marginal(x, n, P, Pr):
     Pr is a 1D numpy.ndarray containing the prior beliefs about P
 
     """
-    

@@ -14,4 +14,3 @@ def likelihood(x, n, P):
     probabilities of developing severe side effects
 
     """
-    
