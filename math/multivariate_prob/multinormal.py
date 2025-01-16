@@ -25,7 +25,7 @@ class MultiNormal():
 
     """
     def __init__(self, data):
-        """class constructor"""
+        """Class Constructor - init mean and covariance matrix"""
         if not isinstance(data, np.ndarray) or data.ndim != 2:
             raise TypeError("data must be a 2D numpy.ndarray")
 
@@ -36,3 +36,17 @@ class MultiNormal():
         self.mean = np.mean(data, axis=1, keepdims=True)
         mean_adj = data - self.mean
         self.cov = mean_adj @ mean_adj.T / (n - 1)
+
+    def pdf(self, x):
+        """Public instance method that calculates the PDF at a data
+        point"""
+        if not isinstance(x, np.ndarray):
+            raise TypeError("x must be a numpy.ndarray")
+        if x.shape != self.mean.shape:
+            raise ValueError(f"x must have the shape ({self.mean.shape[0]}, 1)")
+
+        d = self.mean.shape[0]
+        diff = x - self.mean
+        exp = np.exp(-0.5 * diff.T @ np.linalg.inv(self.cov) @ diff)
+
+        return float(exp / ((2 * np.pi) ** (d / 2) * np.linalg.det(self.cov) ** 0.5))
