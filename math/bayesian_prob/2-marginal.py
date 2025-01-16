@@ -16,6 +16,7 @@ def marginal(x, n, P, Pr):
     """
     return np.sum(intersection(x, n, P, Pr))
 
+
 def intersection(x, n, P, Pr):
     """Function that calculates the intersection of obtaining this
     data with the various hypothetical probabilities:
