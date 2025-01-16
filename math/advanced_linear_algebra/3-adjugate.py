@@ -3,7 +3,7 @@
 
 
 def adjugate(matrix):
-    """
+    """Function that calculates the adjugate matrix of a matrix:
 
     matrix is a list of lists whose adjugate matrix should be
     calculated
@@ -40,7 +40,8 @@ def adjugate(matrix):
 
 
 def cofactor(matrix):
-    """
+    """Function that that calculates the cofactor matrix of a
+    matrix:
 
     matrix is a list of lists whose cofactor matrix should be
     calculated
@@ -71,7 +72,7 @@ def cofactor(matrix):
 
 
 def minor(matrix):
-    """
+    """Function that that calculates the minor matrix of a matrix:
 
     matrix is a list of lists whose minor matrix should be calculated
     If matrix is not a list of lists, raise a TypeError with
