@@ -17,4 +17,17 @@ def correlation(C):
     correlation matrix
 
     """
+    if not isinstance(C, np.ndarray):
+        raise TypeError("C must be a numpy.ndarray")
+
+    if C.ndim != 2 or C.shape[0] != C.shape[1]:
+        raise ValueError("C must be a 2D square matrix")
     
+    # computing the std
+    std_dev = np.sqrt(np.diag(C))
+
+    # compute the correlation matrix
+    correlation_mat = C / np.outer(std_dev, std_dev)
+
+    # returns the numpy.ndarray containing the matrix
+    return (correlation_mat)
