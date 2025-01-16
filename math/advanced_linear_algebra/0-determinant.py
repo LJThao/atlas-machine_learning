@@ -44,8 +44,9 @@ def determinant(matrix):
             for column_index in range(size):
                 # generates the minor matrix
                 minor = [
-                    [matrix[row][col]
-                    for col in range(size) if col != column_index
+                    [
+                        matrix[row][col]
+                        for col in range(size) if col != column_index
                     ]
                     for row in range(1, size)
                 ]
