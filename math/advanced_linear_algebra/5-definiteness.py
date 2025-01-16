@@ -21,9 +21,10 @@ def definiteness(matrix):
     # validating matrix
     if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
-
-    # testing if the matrix is a square and symmetric
+    # test if the matrix is a square and symmetric
     if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
+        return None
+    if not np.array_equal(matrix, matrix.T):
         return None
 
     # computing eigen values
