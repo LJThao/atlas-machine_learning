@@ -38,7 +38,7 @@ def inverse(matrix):
         [adj[row][col] / det_mat for col in range(size)]
         for row in range(size)
     ]
- 
+
     # returns the inverse matrix
     return (inverse_matrix)
 
