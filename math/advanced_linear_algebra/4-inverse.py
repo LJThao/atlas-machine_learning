@@ -3,7 +3,7 @@
 
 
 def inverse(matrix):
-    """
+    """Function that calculates the inverse of a matrix:
 
     matrix is a list of lists whose inverse should be calculated
     If matrix is not a list of lists, raise a TypeError with the
@@ -81,7 +81,7 @@ def adjugate(matrix):
 
 
 def cofactor(matrix):
-    """Function that that calculates the cofactor matrix of a
+    """Function that calculates the cofactor matrix of a
     matrix:
 
     matrix is a list of lists whose cofactor matrix should be
@@ -113,7 +113,7 @@ def cofactor(matrix):
 
 
 def minor(matrix):
-    """Function that that calculates the minor matrix of a matrix:
+    """Function that calculates the minor matrix of a matrix:
 
     matrix is a list of lists whose minor matrix should be calculated
     If matrix is not a list of lists, raise a TypeError with
