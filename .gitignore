@@ -58,3 +58,4 @@ coco_classes.txt
 yolo
 requirements.txt
 *.jpg
+*.txt
