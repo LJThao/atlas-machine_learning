@@ -16,10 +16,10 @@ def pca(X, ndim):
     """
     # adjust the data of the mean to 0
     X -= np.mean(X, axis=0)
-    
+
     # perform SVD
     _, _, Vt = np.linalg.svd(X, full_matrices=False)
-    
+
     # setting T
     T = np.dot(X, Vt.T[:, :ndim])
 
