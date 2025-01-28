@@ -18,3 +18,17 @@ def pca(X, var=0.95):
     dimensionality of the transformed X
 
     """
+    # perform SVD
+    _, S, Vt = np.linalg.svd(X, full_matrices=False)
+
+    # calculate cumulative variance
+    cum_var = np.cumsum(S) / np.sum(S)
+
+    # find number of components for variance
+    nd = np.searchsorted(cum_var, var) + 1
+
+    # setting W
+    W = Vt.T[:, :nd]
+
+    # return the weights matrix
+    return W
