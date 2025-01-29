@@ -25,7 +25,8 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     # validating all the input parameters
     if (not isinstance(X, np.ndarray) or X.ndim != 2 or
             not isinstance(kmin, int) or kmin <= 0 or
-            (kmax is not None and (not isinstance(kmax, int) or kmax < kmin)) or
+            (kmax is not None and (not isinstance(kmax, int)
+                                   or kmax < kmin)) or
             not isinstance(iterations, int) or iterations <= 0):
         return None, None
 
