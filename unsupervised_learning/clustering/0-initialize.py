@@ -16,3 +16,15 @@ def initialize(X, k):
     initialized centroids for each cluster, or None on failure
 
     """
+    # validating X, k, number of data points in X
+    if (not isinstance(X, np.ndarray) or X.ndim != 2 or
+            not isinstance(k, int) or not (1 <= k <= X.shape[0])):
+        return None
+
+    # randomly generating k centroids using uniform distribution
+    centroids = np.random.uniform(low=X.min(axis=0),
+                             high=X.max(axis=0),
+                             size=(k, X.shape[1]))
+
+    # returns initialized centroids of each cluster
+    return centroids
