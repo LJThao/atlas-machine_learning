@@ -23,8 +23,8 @@ def initialize(X, k):
 
     # randomly generating k centroids using uniform distribution
     centroids = np.random.uniform(low=X.min(axis=0),
-                             high=X.max(axis=0),
-                             size=(k, X.shape[1]))
+                                  high=X.max(axis=0),
+                                  size=(k, X.shape[1]))
 
     # returns initialized centroids of each cluster
     return centroids
