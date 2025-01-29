@@ -37,5 +37,6 @@ def pdf(X, m, S):
     exponent = -0.5 * np.sum(diff @ inv_S * diff, axis=1)
 
     P = n * np.exp(exponent)
+    P = np.maximum(P, 1e-300)
 
     return P
