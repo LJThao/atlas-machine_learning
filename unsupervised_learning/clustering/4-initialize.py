@@ -28,7 +28,7 @@ def initialize(X, k):
     # init covariance matrices
     S = np.eye(d)[None, :, :] * np.ones((k, 1, 1))
 
-    # init priors equally for all clusters
+    # init priors equally
     pi = np.full(k, 1 / k)
 
     return pi, m, S
