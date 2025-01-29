@@ -24,7 +24,7 @@ def pdf(X, m, S):
         return None
 
     d = X.shape[1]
-    
+
     try:
         det_S = np.linalg.det(S)
         inv_S = np.linalg.inv(S)
