@@ -15,6 +15,32 @@ def expectation(X, pi, m, S):
     means for each cluster
     S is a numpy.ndarray of shape (k, d, d) containing the
     covariance matrices for each cluster
-    Returns: g, l, or None, None on failure
+    Returns: gamma, log_l, or None, None on failure
 
     """
+    if (not isinstance(X, np.ndarray) or X.ndim != 2 or
+        not isinstance(pi, np.ndarray) or pi.ndim != 1 or
+        not isinstance(m, np.ndarray) or m.ndim != 2 or
+        not isinstance(S, np.ndarray) or S.ndim != 3 or
+        X.shape[1] != m.shape[1] or
+        m.shape[0] != pi.shape[0] or S.shape[0] != pi.shape[0] or
+        S.shape[1] != S.shape[2] or S.shape[1] != X.shape[1] or
+        not np.isclose(np.sum(pi), 1)):
+        return None, None
+
+    k, n = pi.shape[0], X.shape[0]
+
+    gamma_list = [pi[i] * pdf(X, m[i], S[i]) for i in range(k)]
+
+    if any(g is None for g in gamma_list):
+        return None, None
+
+    gamma = np.array(gamma_list)
+
+    total_prob = np.sum(gamma, axis=0, keepdims=True)
+
+    log_l = np.sum(np.log(np.maximum(total_prob, 1e-300)))
+
+    gamma /= total_prob
+
+    return gamma, log_l
