@@ -9,7 +9,17 @@ def agglomerative(X, dist):
 
     X is a numpy.ndarray of shape (n, d) containing the dataset
     dist is the maximum cophenetic distance for all clusters
+    clss contains the cluster indices for each data points
     Returns: clss, a numpy.ndarray of shape (n,) containing the
     cluster indices for each data point
 
     """
+    ward = scipy.cluster.hierarchy.linkage(X,'ward')
+
+    clss = scipy.cluster.hierarchy.fcluster(ward, dist,'distance')
+
+    scipy.cluster.hierarchy.dendrogram(ward, color_threshold=dist)
+
+    plt.show()
+
+    return clss
