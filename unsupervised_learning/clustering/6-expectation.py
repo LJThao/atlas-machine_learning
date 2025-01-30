@@ -32,7 +32,7 @@ def expectation(X, pi, m, S):
 
     gamma = np.array([pi[i] * pdf(X, m[i], S[i]) for i in range(k)])
 
-    if np.any(gamma == None):
+    if gamma is None or np.any(gamma == None):
         return None, None
 
     total_prob = np.sum(gamma, axis=0, keepdims=True)
