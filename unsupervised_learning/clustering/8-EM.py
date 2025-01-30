@@ -32,7 +32,7 @@ def expectation_maximization(X, k, iterations=1000,
     # init all parameters
     pi, m, S = initialize(X, k)
     g, log_l = expectation(X, pi, m, S)
-    
+
     if g is None:
         return None, None, None, None, None
 
@@ -40,7 +40,7 @@ def expectation_maximization(X, k, iterations=1000,
     for i in range(iterations):
         pi, m, S = maximization(X, g)
         g, new_log_l = expectation(X, pi, m, S)
-        
+
         if g is None:
             return None, None, None, None, None
 
