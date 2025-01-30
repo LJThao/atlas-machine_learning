@@ -45,13 +45,13 @@ def BIC(X, kmin=1, kmax=None, iterations=1000,
     l = []
     b = []
 
-    # run expectation max for each k in range
+    # run expectation max in each k in range
     for k in range(kmin, kmax + 1):
         pi, m, S, _, log_l = expectation_maximization(X, k,
                                                       iterations,
                                                       tol, verbose)
 
-        # store values for each k
+        # store values in each k
         best_k_values.append(k)
         best_results.append((pi, m, S))
         l.append(log_l)
