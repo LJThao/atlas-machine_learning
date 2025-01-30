@@ -28,18 +28,18 @@ def expectation(X, pi, m, S):
         not np.isclose(np.sum(pi), 1)):
         return None, None
 
-    k, n = pi.shape[0], X.shape[0]
+    k = pi.shape[0]
 
-    gamma_list = [pi[i] * pdf(X, m[i], S[i]) for i in range(k)]
+    gamma = np.array([pi[i] * pdf(X, m[i], S[i]) for i in range(k)])
 
-    if any(g is None for g in gamma_list):
+    if np.any(gamma == None):
         return None, None
-
-    gamma = np.array(gamma_list)
 
     total_prob = np.sum(gamma, axis=0, keepdims=True)
 
-    log_l = np.sum(np.log(np.maximum(total_prob, 1e-300)))
+    total_prob = np.maximum(total_prob, 1e-300)
+
+    log_l = np.sum(np.log(total_prob))
 
     gamma /= total_prob
 
