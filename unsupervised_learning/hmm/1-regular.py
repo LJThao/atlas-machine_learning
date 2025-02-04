@@ -13,6 +13,6 @@ def regular(P):
     state j
     n is the number of states in the markov chain
     Returns: a numpy.ndarray of shape (1, n) containing the steady
-    state probabilities, or None on failure  
+    state probabilities, or None on failure
 
     """
