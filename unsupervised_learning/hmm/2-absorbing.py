@@ -14,3 +14,24 @@ def absorbing(P):
     Returns: True if it is absorbing, or False on failure
 
     """
+    # validating to make sure P is a square
+    if (not isinstance(P, np.ndarray) or P.ndim != 2 or
+            P.shape[0] != P.shape[1]):
+        return False
+
+    # setting number of states in the Markov chain
+    n = P.shape[0]
+    # identifying the absorbing states
+    abs_states = np.diag(P) == 1
+
+    if np.all(abs_states):
+        return True
+
+    # iterate over states to see if any can transition to abs state
+    for i in range(n):
+        if abs_states[i]:
+            continue
+        if np.any(P[i, abs_states] > 0):
+            return True
+
+    return False
