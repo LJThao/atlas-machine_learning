@@ -22,3 +22,23 @@ def markov_chain(P, s, t=1):
     or None on failure
 
     """
+    # validating the input parameters
+    if (
+        not isinstance(P, np.ndarray)
+        or not isinstance(s, np.ndarray)
+        or not isinstance(t, int)
+        or s.shape[1] != P.shape[0]
+        or P.shape[0] != P.shape[1]
+        or t < 0
+    ):
+        return None
+
+    # init state probabilities
+    state_prob = s
+
+    # iterate through and update states
+    for _ in range(t):
+        state_prob = np.matmul(state_prob, P)
+
+    # return specific state after t iterations
+    return state_prob
