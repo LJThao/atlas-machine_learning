@@ -97,4 +97,29 @@ class BayesianOptimization():
         optimal function value
 
         """
-        
+        # iterating over iterations without using the index
+        for _ in range(iterations):
+            # getting the next best sample point
+            X_next, _ = self.acquisition()
+
+            # stop if the point has already been sampled
+            if np.any(np.isclose(self.gp.X, X_next)):
+                break
+
+            # evaluating the function at X_next and updating GP
+            Y_next = self.f(X_next).reshape(-1, 1)
+            self.gp.update(X_next.reshape(-1, 1), Y_next)
+
+        # finding the best observed input point
+        X_opt = (
+            self.gp.X[np.argmin(self.gp.Y)]
+            if self.minimize else self.gp.X[np.argmax(self.gp.Y)]
+        )
+        # finding the best observed function value
+        Y_opt = ( 
+            np.min(self.gp.Y)
+            if self.minimize else np.max(self.gp.Y)
+        )
+
+        # return the opt point and the opt function value
+        return X_opt, Y_opt
