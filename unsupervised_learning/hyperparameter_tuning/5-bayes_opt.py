@@ -116,7 +116,7 @@ class BayesianOptimization():
             if self.minimize else self.gp.X[np.argmax(self.gp.Y)]
         )
         # finding the best observed function value
-        Y_opt = ( 
+        Y_opt = (
             np.min(self.gp.Y)
             if self.minimize else np.max(self.gp.Y)
         )
