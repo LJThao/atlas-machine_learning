@@ -120,6 +120,7 @@ class BayesianOptimization():
             np.min(self.gp.Y)
             if self.minimize else np.max(self.gp.Y)
         )
+        Y_opt = np.array([Y_opt])
 
         # return the opt point and the opt function value
         return X_opt, Y_opt
