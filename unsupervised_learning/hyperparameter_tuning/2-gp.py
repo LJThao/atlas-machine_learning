@@ -77,6 +77,6 @@ class GaussianProcess():
         # appending the new sample to the dataset
         self.X = np.vstack((self.X, X_new.reshape(-1, 1)))
         self.Y = np.vstack((self.Y, Y_new.reshape(-1, 1)))
-        
+
         # update covariance mat with the new dataset
         self.K = self.kernel(self.X, self.X)
