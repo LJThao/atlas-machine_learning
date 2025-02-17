@@ -3,3 +3,8 @@
 import numpy as np
 
 
+class BayesianOptimization():
+    """Class that performs Bayesian optimization on a noiseless 1D
+    Gaussian process:"""
+
+    
