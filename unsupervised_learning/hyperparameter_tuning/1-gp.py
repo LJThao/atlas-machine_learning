@@ -61,6 +61,6 @@ class GaussianProcess():
 
         # calculate the variance of predictive dist
         sigma = np.diag(K_ss - K_s.T @ K_inv @ K_s)
-        
+
         # return the mu and sigma
         return mu.flatten(), sigma
