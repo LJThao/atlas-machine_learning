@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Bayesian Optimization Module - Based on 3-bayes_opt.py"""
 import numpy as np
-GP = __import__('2-gp').GaussianProcess
 from scipy.stats import norm
+GP = __import__('2-gp').GaussianProcess
 
 
 class BayesianOptimization():
@@ -76,10 +76,12 @@ class BayesianOptimization():
         Z[mask] = imp[mask] / sigma[mask]
 
         EI = np.zeros_like(imp)
-        EI[mask] = imp[mask] * norm.cdf(Z[mask]) + sigma[mask] * norm.pdf(Z[mask])
+        EI[mask] = (
+            imp[mask] * norm.cdf(Z[mask]) + sigma[mask] * norm.pdf(Z[mask])
+        )
 
         # select the best sample point
         X_next = self.X_s[np.argmax(EI)]
 
-        #return next best sample point, containing EI of each sample
+        # return next best sample point, containing EI of each sample
         return X_next, EI
