@@ -64,3 +64,19 @@ class GaussianProcess():
 
         # return the mu and sigma
         return mu.flatten(), sigma
+
+    def update(self, X_new, Y_new):
+        """Function that updates a Gaussian Process
+
+        X_new is a numpy.ndarray of shape (1,) that represents the new
+        sample point
+        Y_new is a numpy.ndarray of shape (1,) that represents the new
+        sample function value
+
+        """
+        # appending the new sample to the dataset
+        self.X = np.vstack((self.X, X_new.reshape(-1, 1)))
+        self.Y = np.vstack((self.Y, Y_new.reshape(-1, 1)))
+        
+        # update covariance mat with the new dataset
+        self.K = self.kernel(self.X, self.X)
