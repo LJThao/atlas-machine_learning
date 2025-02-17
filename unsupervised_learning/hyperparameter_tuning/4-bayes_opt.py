@@ -2,6 +2,7 @@
 """Bayesian Optimization Module - Based on 3-bayes_opt.py"""
 import numpy as np
 GP = __import__('2-gp').GaussianProcess
+from scipy.stats import norm
 
 
 class BayesianOptimization():
@@ -46,3 +47,39 @@ class BayesianOptimization():
 
         # optimization mode
         self.minimize = minimize
+
+    def acquisition(self):
+        """Function that calculates the next best sample location:
+
+        Returns: X_next, EI
+        X_next is a numpy.ndarray of shape (1,) representing the next
+        best sample point
+        EI is a numpy.ndarray of shape (ac_samples,) containing the
+        expected improvement of each potential sample
+
+        """
+        # mean and std for all sampling prediction points and reshaping
+        mu, sigma = self.gp.predict(self.X_s)
+        sigma = sigma.reshape(-1)
+
+        # find the best observed value
+        if self.minimize:
+            mu_sample_opt = np.min(self.gp.Y)
+            imp = mu_sample_opt - mu - self.xsi
+        else:
+            mu_sample_opt = np.max(self.gp.Y)
+            imp = mu - mu_sample_opt - self.xsi
+
+        # expected improvement calculation
+        Z = np.zeros_like(imp)
+        mask = sigma > 0
+        Z[mask] = imp[mask] / sigma[mask]
+
+        EI = np.zeros_like(imp)
+        EI[mask] = imp[mask] * norm.cdf(Z[mask]) + sigma[mask] * norm.pdf(Z[mask])
+
+        # select the best sample point
+        X_next = self.X_s[np.argmax(EI)]
+
+        #return next best sample point, containing EI of each sample
+        return X_next, EI
