@@ -1,0 +1,7 @@
+Best Hyperparameters:
+Learning Rate: 0.0012
+Latent Dimension: 32
+Neurons: 64
+Dropout Rate: 0.38
+Batch Size: 32
+Epochs: 40
