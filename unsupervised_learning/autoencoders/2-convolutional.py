@@ -29,3 +29,43 @@ def autoencoder(input_dims, filters, latent_dims):
     auto is the full autoencoder model
 
     """
+    # build the encoder then extracting the features
+    encode_input = keras.Input(shape=input_dims)
+    x = encode_input
+    for f in filters:
+        x = keras.layers.Conv2D(
+            f, kernel_size=(3, 3), padding="same", activation="relu"
+        )(x)
+        x = keras.layers.MaxPooling2D(pool_size=(2, 2), padding="same")(x)
+    encoder = keras.Model(encode_input, x, name="encoder")
+
+    # build the decoder - reconstructing the original image
+    decode_input = keras.Input(shape=latent_dims)
+    x = decode_input
+    for f in reversed(filters[:-1]):
+        x = keras.layers.Conv2D(
+            f, kernel_size=(3, 3), padding="same", activation="relu"
+        )(x)
+        x = keras.layers.UpSampling2D(size=(2, 2))(x)
+
+    x = keras.layers.Conv2D(
+        filters[0], kernel_size=(3, 3), padding="valid", activation="relu"
+    )(x)
+    x = keras.layers.UpSampling2D(size=(2, 2))(x)
+
+    x = keras.layers.Conv2D(
+        input_dims[-1],
+        kernel_size=(3, 3),
+        padding="same",
+        activation="sigmoid"
+    )(x)
+
+    decoder = keras.Model(decode_input, x, name="decoder")
+
+    # connects the encoder + decoder into autoencoder
+    auto = keras.Model(
+        encode_input, decoder(encoder(encode_input)), name="autoencoder"
+    )
+    auto.compile(optimizer="adam", loss="binary_crossentropy")
+
+    return encoder, decoder, auto
