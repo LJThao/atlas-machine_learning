@@ -13,8 +13,8 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     latent_dims is an integer containing the dimensions of the latent space
     representation
     Returns: encoder, decoder, auto
-    encoder is the encoder model, which should output the latent representation,
-    the mean, and the log variance, respectively
+    encoder is the encoder model, which should output the latent
+    representation, the mean, and the log variance, respectively
     decoder is the decoder model
     auto is the full autoencoder model
 
