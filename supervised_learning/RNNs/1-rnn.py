@@ -16,6 +16,6 @@ def rnn(rnn_cell, X, h_0):
     h is the dimensionality of the hidden state
     Returns: H, Y
     H is a numpy.ndarray containing all of the hidden states
-    Y is a numpy.ndarray containing all of the outputs 
+    Y is a numpy.ndarray containing all of the outputs
 
     """
