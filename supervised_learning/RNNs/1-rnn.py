@@ -19,3 +19,19 @@ def rnn(rnn_cell, X, h_0):
     Y is a numpy.ndarray containing all of the outputs
 
     """
+    t, m, i = X.shape
+    h = h_0.shape[1]
+
+    # storing all hidden states then all outputs
+    H = np.zeros((t + 1, m, h))
+    Y = []
+
+    H[0] = h_0
+    # iterate through each time step and store output
+    for t in range(t):
+        H[t + 1], y = rnn_cell.forward(H[t], X[t])
+        Y.append(y)
+
+    Y = np.array(Y)
+
+    return H, Y
