@@ -44,6 +44,7 @@ class GRUCell():
 
         return h_next, y
 
+
 def sigmoid(x):
     """Function to update gates"""
     return 1 / (1 + np.exp(-x))
