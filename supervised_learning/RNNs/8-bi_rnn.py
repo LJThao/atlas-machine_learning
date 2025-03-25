@@ -22,3 +22,25 @@ def bi_rnn(bi_cell, X, h_0, h_t):
     Y is a numpy.ndarray containing all of the outputs
 
     """
+    t, m, i = X.shape
+    h = h_0.shape[1]
+
+    Hf = np.zeros((t + 1, m, h))
+    Hb = np.zeros((t + 1, m, h))
+
+    Hf[0] = h_0
+    Hb[-1] = h_t
+
+    for t in range(t):
+        Hf[t + 1] = bi_cell.forward(Hf[t], X[t])
+
+    for t in range(t - 1, -1, -1):
+        Hb[t] = bi_cell.backward(Hb[t + 1], X[t])
+
+    # concatenate both forward and backward
+    H = np.concatenate((Hf[1:], Hb[:-1]), axis=2)
+
+    # compute output using bi cell output function
+    Y = bi_cell.output(H)
+
+    return H, Y
