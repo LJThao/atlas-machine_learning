@@ -37,7 +37,7 @@ class BidirectionalCell():
         h_next = np.tanh(h_x @ self.Whf + self.bhf)
 
         return h_next
-    
+ 
     def backward(self, h_next, x_t):
         """Function that calculates the hidden state in the
         backward direction for one time step:
