@@ -21,7 +21,7 @@ def bag_of_words(sentences, vocab=None):
 
     """
     # tokenize each sentence into lowercase
-    token = [re.findall(r"\b\w+(?:'\w+)?\b", s.lower()) for s in sentences]
+    token = [re.findall(r'\b\w+\b', s.lower()) for s in sentences]
 
     # use vocab or we build it from the words
     features = (
