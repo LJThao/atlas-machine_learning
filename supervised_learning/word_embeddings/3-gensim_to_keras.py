@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Extract Word2Vec Module"""
+import tensorflow as tf
 
 
 def gensim_to_keras(model):
