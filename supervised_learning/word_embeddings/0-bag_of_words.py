@@ -24,8 +24,9 @@ def bag_of_words(sentences, vocab=None):
     token = [re.findall(r'\b\w+\b', s.lower()) for s in sentences]
 
     # use vocab or we build it from the words
-    features = vocab if vocab is not None else sorted(
-        set(word for sent in token for word in sent)
+    features = (
+        sorted(set(word for sent in token for word in sent))
+        if vocab is None else vocab
     )
 
     # map the word to its index
