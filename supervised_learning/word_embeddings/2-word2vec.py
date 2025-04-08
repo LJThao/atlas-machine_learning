@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Train Word2Vec Module"""
+from gensim.models import Word2Vec
 
 
 def word2vec_model(sentences, vector_size=100, min_count=5,
@@ -22,3 +23,18 @@ def word2vec_model(sentences, vector_size=100, min_count=5,
     Returns: the trained model
 
     """
+    # init the Word2Vec model with the given parameters
+    model = Word2Vec(sentences=sentences,
+                     vector_size=vector_size,
+                     window=window,
+                     min_count=min_count,
+                     negative=negative,
+                     sg=0 if cbow else 1,
+                     seed=seed,
+                     workers=workers)
+
+    # train the model on the sentences for the given number of epochs
+    model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
+
+    # return the trained Word2Vec model
+    return model
