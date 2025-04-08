@@ -35,6 +35,8 @@ def word2vec_model(sentences, vector_size=100, min_count=5,
         workers=workers
     )
 
+    # call and build
+    model.build_vocab(sentences)
     # train the model on the sentences for the given number of epochs
     model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
 
