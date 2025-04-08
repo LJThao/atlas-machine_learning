@@ -22,7 +22,7 @@ def fasttext_model(sentences, vector_size=100, min_count=5, negative=5,
     Returns: the trained model
 
     """
-        # create the model with the settings
+    # create the model with the settings
     model = gensim.models.FastText(
             sentences=sentences,
             vector_size=vector_size,
@@ -38,7 +38,7 @@ def fasttext_model(sentences, vector_size=100, min_count=5, negative=5,
     model.build_vocab(sentences)
     # train the model
     model.train(sentences,
-                    total_examples=model.corpus_count,
-                    epochs=epochs)
+                total_examples=model.corpus_count,
+                epochs=epochs)
 
     return model
