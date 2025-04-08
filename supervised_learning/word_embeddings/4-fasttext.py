@@ -24,13 +24,15 @@ def fasttext_model(sentences, vector_size=100, min_count=5, negative=5,
     """
         # create the model with the settings
         model = gensim.models.FastText(
+            sentences=sentences,
             vector_size=vector_size,
             window=window,
             min_count=min_count,
             negative=negative,
             sg=0 if cbow else 1,
             seed=seed,
-            workers=workers
+            workers=workers,
+            epochs=epochs
     )
         # build the model vocab
         model.build_vocab(sentences)
