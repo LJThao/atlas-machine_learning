@@ -33,10 +33,10 @@ def cumulative_bleu(references, sentence, n):
             ng: min(
                 s_counts[ng],
                 max(
-                    [ [
+                    [[
                         tuple(r[j:j + i])
                         for j in range(len(r) - i + 1)].count(ng)
-                        for r in references ] or [0]
+                        for r in references] or [0]
                 )
             )
             for ng in s_counts
