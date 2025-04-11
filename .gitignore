@@ -60,3 +60,7 @@ requirements.txt
 *.jpg
 *.txt
 *.npy
+
+# Ignore folders
+__MACOSXi
+ZendeskArticles
