@@ -27,7 +27,6 @@ class Dataset():
         self.data_train = self.data_train.map(self.tf_encode)
         self.data_valid = self.data_valid.map(self.tf_encode)
 
-
         self.data_train = self.data_train.filter(
             lambda pt, en: tf.logical_and(
                 tf.size(pt) <= max_len,
@@ -44,7 +43,9 @@ class Dataset():
         self.data_train = self.data_train.cache()
         self.data_train = self.data_train.shuffle(20000)
         self.data_train = self.data_train.padded_batch(batch_size)
-        self.data_train = self.data_train.prefetch(tf.data.experimental.AUTOTUNE)
+        self.data_train = self.data_train.prefetch(
+            tf.data.experimental.AUTOTUNE
+        )
         # validating the batch data
         self.data_valid = self.data_valid.padded_batch(batch_size)
         # print if loaded
