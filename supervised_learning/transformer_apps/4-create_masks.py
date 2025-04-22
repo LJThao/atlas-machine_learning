@@ -16,8 +16,8 @@ def create_masks(inputs, target):
 
     """
     # padding mask - 1 where the input == 0
-    pad = lambda x: tf.cast(tf.equal(x, 0),
-                            tf.float32)[:, tf.newaxis, tf.newaxis, :]
+    def pad(x):
+        return tf.cast(tf.equal(x, 0), tf.float32)[:, None, None, :]
 
     # mask for encoder input
     encoder_mask = pad(inputs)
