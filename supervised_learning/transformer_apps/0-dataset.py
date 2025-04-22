@@ -47,22 +47,3 @@ class Dataset():
         ).train_new_from_iterator(en_corpus, vocab_size=2**13)
 
         return tokenizer_pt, tokenizer_en
-
-    def encode(self, pt, en):
-        """Function that encodes a translation into token IDs"""
-        # decoding bytes to strings
-        pt = pt.decode('utf-8')
-        en = en.decode('utf-8')
-
-        # adding the tokens to the encoded sentences
-        pt_tokens = [
-            self.tokenizer_pt.vocab_size,
-            *self.tokenizer_pt.encode(pt),
-            self.tokenizer_pt.vocab_size + 1
-        ]
-        en_tokens = [
-            self.tokenizer_en.vocab_size,
-            *self.tokenizer_en.encode(en),
-            self.tokenizer_en.vocab_size + 1
-        ]
-        return pt_tokens, en_tokens
