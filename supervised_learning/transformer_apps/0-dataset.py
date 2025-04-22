@@ -30,18 +30,21 @@ class Dataset():
         en is the tf.Tensor containing the corresponding English sentence
 
         """
-        # build the tokenizer for Portuguese
+        # convert dataset to python iterable
+        pt_corpus = (pt.decode('utf-8') for pt, _ in data.as_numpy_iterator())
+        en_corpus = (en.decode('utf-8') for _, en in data.as_numpy_iterator())
+
+        # build the tokenizer for Portuguese and English
         tokenizer_pt = (
             tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-            (pt.numpy() for pt, _ in data),
-            target_vocab_size=2**13
+                pt_corpus,
+                target_vocab_size=2**13
             )
         )
-        # build the tokenizer for English
         tokenizer_en = (
             tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-            (en.numpy() for _, en in data),
-            target_vocab_size=2**13
+                en_corpus,
+                target_vocab_size=2**13
             )
         )
         return tokenizer_pt, tokenizer_en
@@ -49,14 +52,17 @@ class Dataset():
     def encode(self, pt, en):
         """Function that encodes a translation into token IDs"""
         # encoding the Portuguese and English sentences with token IDs
+        pt = pt.decode('utf-8')
+        en = en.decode('utf-8')
+
         pt_tokens = [
             self.tokenizer_pt.vocab_size,
-            *self.tokenizer_pt.encode(pt.numpy()),
+            *self.tokenizer_pt.encode(pt),
             self.tokenizer_pt.vocab_size + 1
         ]
         en_tokens = [
             self.tokenizer_en.vocab_size,
-            *self.tokenizer_en.encode(en.numpy()),
+            *self.tokenizer_en.encode(en),
             self.tokenizer_en.vocab_size + 1
         ]
         return pt_tokens, en_tokens
