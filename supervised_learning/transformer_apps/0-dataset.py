@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Dataset Module"""
 import tensorflow_datasets as tfds
+import transformers
 
 
 class Dataset():
