@@ -14,13 +14,16 @@ class Dataset():
             as_supervised=True,
             with_info=True
         )
+        # separate sets
         self.data_train = data['train']
         self.data_valid = data['validation']
 
-        # init tokenizers from pre-trained models
+        # build tokenizers from training data
         self.tokenizer_pt, self.tokenizer_en = self.tokenize_dataset(
             self.data_train
         )
+        # print if loaded
+        print("Datasets correctly loaded")
 
     def tokenize_dataset(self, data):
         """Function that creates sub-word tokenizers for our dataset
@@ -31,31 +34,27 @@ class Dataset():
         en is the tf.Tensor containing the corresponding English sentence
 
         """
-        # convert dataset to python iterable
+        # convert datasets
         pt_corpus = (pt.decode('utf-8') for pt, _ in data.as_numpy_iterator())
         en_corpus = (en.decode('utf-8') for _, en in data.as_numpy_iterator())
 
-        # build the tokenizer for Portuguese and English
-        tokenizer_pt = (
-            tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-                pt_corpus,
-                target_vocab_size=2**13
-            )
-        )
-        tokenizer_en = (
-            tfds.deprecated.text.SubwordTextEncoder.build_from_corpus(
-                en_corpus,
-                target_vocab_size=2**13
-            )
-        )
+        tokenizer_pt = transformers.BertTokenizerFast.from_pretrained(
+            'neuralmind/bert-base-portuguese-cased'
+        ).train_new_from_iterator(pt_corpus, vocab_size=2**13)
+
+        tokenizer_en = transformers.BertTokenizerFast.from_pretrained(
+            'bert-base-uncased'
+        ).train_new_from_iterator(en_corpus, vocab_size=2**13)
+
         return tokenizer_pt, tokenizer_en
 
     def encode(self, pt, en):
         """Function that encodes a translation into token IDs"""
-        # encoding the Portuguese and English sentences with token IDs
+        # decoding bytes to strings
         pt = pt.decode('utf-8')
         en = en.decode('utf-8')
 
+        # adding the tokens to the encoded sentences
         pt_tokens = [
             self.tokenizer_pt.vocab_size,
             *self.tokenizer_pt.encode(pt),
