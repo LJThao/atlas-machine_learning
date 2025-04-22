@@ -70,8 +70,11 @@ class Dataset():
             *self.tokenizer_en.encode(en),
             self.tokenizer_en.vocab_size + 1
         ]
+        final_pt = tf.convert_to_tensor(pt_tokens, dtype=tf.int64)
+        final_en = tf.convert_to_tensor(en_tokens, dtype=tf.int64)
+
         # converting the tokens to arrays
-        return np.array(pt_tokens), np.array(en_tokens)
+        return final_pt, final_en
 
     def tf_encode(self, pt, en):
         """Function that acts as a tensorflow wrapper for the encode instance method"""
