@@ -2,7 +2,6 @@
 """TF Encode Module"""
 import tensorflow_datasets as tfds
 import transformers
-import numpy as np
 import tensorflow as tf
 
 
