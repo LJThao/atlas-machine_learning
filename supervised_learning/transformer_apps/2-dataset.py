@@ -77,7 +77,8 @@ class Dataset():
         return final_pt, final_en
 
     def tf_encode(self, pt, en):
-        """Function that acts as a tensorflow wrapper for the encode instance method"""
+        """Function that acts as a tensorflow wrapper for the
+        encode instance method"""
         result_pt, result_en = tf.py_function(
             self.encode, inp=[pt, en], Tout=[tf.int64, tf.int64]
         )
