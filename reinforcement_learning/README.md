@@ -1,1 +1,1 @@
-Q-learning
+Reinforcement Learning
