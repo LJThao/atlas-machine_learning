@@ -10,3 +10,8 @@ def q_init(env):
     Returns: the Q-table as a numpy.ndarray of zeros
 
     """
+    # init the q-table with zeros
+    q_table = np.zeros((env.observation_space.n,
+                        env.action_space.n))
+    
+    return q_table
