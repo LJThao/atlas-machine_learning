@@ -16,3 +16,10 @@ def epsilon_greedy(Q, state, epsilon):
     Returns: the next action index
 
     """
+    # pick a random action with a probability epsilon, else pick best one
+    if np.random.rand() < epsilon:
+        return np.random.randint(Q.shape[1])
+
+    action_index = np.argmax(Q[state])
+
+    return action_index
