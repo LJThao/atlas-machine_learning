@@ -2,8 +2,9 @@
 """Load the Environment Module"""
 import gymnasium as gym
 
+
 def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
-    """Function that loads the pre-made FrozenLakeEnv evnironment
+    """Function that loads the pre-made FrozenLakeEnv environment
     from gymnasium:
 
     desc is either None or a list of lists containing a custom description
@@ -15,4 +16,3 @@ def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
     Returns: the environment
 
     """
-    
