@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Load the Environment Module"""
-
+import gymnasium as gym
 
 def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
     """Function that loads the pre-made FrozenLakeEnv evnironment
@@ -15,3 +15,4 @@ def load_frozen_lake(desc=None, map_name=None, is_slippery=False):
     Returns: the environment
 
     """
+    
