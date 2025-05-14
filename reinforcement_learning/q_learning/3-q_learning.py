@@ -44,7 +44,7 @@ def train(env, Q, episodes=5000, max_steps=100, alpha=0.1, gamma=0.99,
             state = new_state
             episode_reward += reward
 
-            if done == True:
+            if done:
                 break
 
         # lowering epsilon

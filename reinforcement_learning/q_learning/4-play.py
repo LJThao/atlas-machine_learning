@@ -28,7 +28,7 @@ def play(env, Q, max_steps=100):
         total_reward += reward
 
         # stop the game if it is over
-        if done == True:
+        if done:
             break
 
     # save the final board
