@@ -20,6 +20,8 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
     Returns: Q, the updated Q table
 
     """
+    initial_epsilon = epsilon
+
     for episode in range(episodes):
         # reset traces every episode
         eligibility = np.zeros_like(Q)
@@ -63,7 +65,11 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 break
 
         # decay epsilon
-        epsilon = min_epsilon + (1 - min_epsilon) * np.exp(-epsilon_decay * episode)
+        epsilon = (
+            min_epsilon
+            + (initial_epsilon - min_epsilon)
+            * np.exp(-epsilon_decay * episode)
+        )
 
     # return updated Q
     return Q
