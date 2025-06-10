@@ -46,7 +46,8 @@ def sarsa_lambtha(env, Q, lambtha, episodes=5000, max_steps=100, alpha=0.1,
                 next_action = np.argmax(Q[next_state])
 
             # computing the TD error
-            delta = reward + gamma * Q[next_state, next_action] - Q[state, action]
+            td_target = reward + gamma * Q[next_state, next_action]
+            delta = td_target - Q[state, action]
 
             # update eligibility trace
             eligibility[state, action] += 1
