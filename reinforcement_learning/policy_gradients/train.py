@@ -15,3 +15,33 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
     loop)
 
     """
+    # init weights and store ep scores
+    weights = np.random.rand(
+    env.observation_space.shape[0],
+    env.action_space.n
+    )
+    scores = []
+
+    for ep in range(nb_episodes):
+        state, _ = env.reset()
+        steps = []
+
+        done = False
+        while not done:
+            action, grad = policy_gradient(state, weights)
+            state, reward, terminated, truncated, _ = env.step(action)
+            done = terminated or truncated
+            steps.append((reward, grad))
+
+        G = 0
+        for reward, grad in reversed(steps):
+            # computing returns and updating weights
+            G = reward + gamma * G
+            weights += alpha * G * grad
+
+        # getting the total rewards for eps and logging eps results
+        score = sum(r for r, _ in steps)
+        scores.append(score)
+        print(f"Episode: {ep} Score: {score}")
+
+    return scores
