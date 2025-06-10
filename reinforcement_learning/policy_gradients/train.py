@@ -17,8 +17,8 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
     """
     # init weights and store ep scores
     weights = np.random.rand(
-    env.observation_space.shape[0],
-    env.action_space.n
+        env.observation_space.shape[0],
+        env.action_space.n
     )
     scores = []
 
