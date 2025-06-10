@@ -4,7 +4,7 @@ import numpy as np
 policy_gradient = __import__('policy_gradient').policy_gradient
 
 
-def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
+def train(env, nb_episodes, alpha=0.000045, gamma=0.98, show_result=False):
     """Function that implements a full training.
 
     env: initial environment
@@ -43,5 +43,9 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
         score = sum(r for r, _ in steps)
         scores.append(score)
         print(f"Episode: {ep} Score: {score}")
+
+    # rendering the env every 1k eps
+    if show_result and ep % 1000 == 0:
+        env.render()
 
     return scores
