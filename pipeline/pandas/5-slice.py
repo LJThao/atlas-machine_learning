@@ -10,3 +10,7 @@ def slice(df):
     Returns: the sliced pd.DataFrame
 
     """
+    # selecting every 60th row
+    sliced_rows = df.loc[::60, ["High", "Low", "Close", "Volume_(BTC)"]]
+
+    return sliced_rows
