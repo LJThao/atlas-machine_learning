@@ -12,3 +12,11 @@ def from_numpy(array):
     Returns: the newly created pd.DataFrame
 
     """
+    # create column names
+    column_labels = [chr(65 + i) for i in range(array.shape[1])]
+
+    # create dataframe
+    result_df = pd.DataFrame(array, columns=column_labels)
+
+    # returning the newly created df
+    return result_df
