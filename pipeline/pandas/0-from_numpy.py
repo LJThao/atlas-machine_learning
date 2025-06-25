@@ -3,7 +3,7 @@
 import pandas as pd
 
 
-def from_numpy(array): 
+def from_numpy(array):
     """Function that creates a pd.DataFrame from a np.ndarray:
 
     array is the np.ndarray from which you should create the pd.DataFrame
