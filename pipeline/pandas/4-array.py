@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """To Numpy Module"""
-import pandas as pd
 
 
 def array(df):
