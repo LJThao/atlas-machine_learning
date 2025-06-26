@@ -9,7 +9,7 @@ if __name__ == '__main__':
     response = requests.get(launches_url)
     launches = response.json()
 
-    # sort by launch date 
+    # sort by launch date
     launches.sort(key=lambda x: x['date_unix'])
 
     # pick the earliest launch
