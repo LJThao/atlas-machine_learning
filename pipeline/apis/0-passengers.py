@@ -6,9 +6,9 @@ import requests
 def availableShips(passengerCount):
     """Function to create a method that returns the list of ships that can
     hold a given number of passengers:
-    
+
     If no ship available, return an empty list.
-    
+
     """
     url = 'https://swapi-api.hbtn.io/api/starships/'
     ships = []
