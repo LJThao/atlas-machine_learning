@@ -35,7 +35,7 @@ def sentientPlanets():
                         name = hw_data.get('name')
                         if name:
                             sentient_homeworlds.add(name)
-                    except:
+                    except requests.exceptions.RequestException:
                         continue
 
         species_url = data.get('next')
