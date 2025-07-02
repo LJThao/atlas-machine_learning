@@ -60,6 +60,7 @@ requirements.txt
 *.jpg
 *.txt
 *.npy
+tmp_res
 
 # Ignore folders
 __MACOSXi
